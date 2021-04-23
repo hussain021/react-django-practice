@@ -4,11 +4,13 @@ The purpose of this repo is to help the team lead and his team member in trainin
 
 ## Getting Started
 
-1. Kindly read these [SOPs](https://docs.google.com/document/d/1jXP9B9MFCKNWbMIyDBqRtronE8jYQlaf9NYxovZiCZQ/edit) before starting the training.
-2. For every assigned task create a new branch e.g. alisufian-borjanspider.
-3. When the task is complete make sure the code confirms to [pep8](https://www.python.org/dev/peps/pep-0008/).
-4. Push the code and create a pull request against your *master* branch.
-5. Specify the title of the PR as *task* e.g. *Weatherman* so its easy to find in the list.
+1. Fork this repository for every new trainee.
+2. Go to the <em>Settings > General > Visibility, project features, permissions</em> and set the Project Visibility to Private. This is very important so that repositories are private to other trainees and they may not cheat.
+3. Change the repository name in <em>Settings > General<em> to <em>{Team Name} - {Trainee Name} e.g. Edited - Ali Sufian<em>
+4. For every assigned task create a new branch e.g. alisufian-borjanspider.
+5. When the task is complete make sure the code confirms to [pep8](https://www.python.org/dev/peps/pep-0008/).
+6. Push the code and create a pull request against your *master* branch.
+7. Specify the title of the PR as *task* e.g. *Weatherman* so its easy to find in the list.
 
 Do not add log files, temp files, data files etc.
 **Good Luck**.
