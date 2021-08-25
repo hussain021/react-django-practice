@@ -15,7 +15,7 @@ NEWSPIDER_MODULE = 'clothes_spider.spiders'
 ITEM_PIPELINES = {
     'scrapy.pipelines.images.ImagesPipeline': 1,
 }
-IMAGES_STORE = "images"
+IMAGES_STORE = "../../images"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'clothes_spider (+http://www.yourdomain.com)'
