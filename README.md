@@ -15,3 +15,6 @@ The purpose of this repo is to help the team lead and his team member in trainin
 
 Do not add log files, temp files, data files etc.
 **Good Luck**.
+
+To run:
+use 'scrapy runspider jobs_spider.py -O output.json' command to run the spider, where output.json will hold the jobs scrapped
