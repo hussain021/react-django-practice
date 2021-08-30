@@ -1,4 +1,5 @@
-URLS = ['https://www.sheego.de/neu/neue-blusen-tuniken', 'https://www.sheego.de/neu/neue-hosen',
+URLS = [
+    'https://www.sheego.de/neu/neue-blusen-tuniken', 'https://www.sheego.de/neu/neue-hosen',
     'https://www.sheego.de/neu/neue-kleider', 'https://www.sheego.de/neu/neue-shirts-tops',
     'https://www.sheego.de/neu/trendstyles', 'https://www.sheego.de/neu/kundenlieblinge',
     'https://www.sheego.de/damenmode/abendmode', 'https://www.sheego.de/damenmode/accessoires',
