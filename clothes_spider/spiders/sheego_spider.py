@@ -32,7 +32,11 @@ class SheegoSpider(scrapy.Spider):
             'price': response.css('span.l-subline-2.l-bold.product__price__current.at-lastprice::text').extract_first(),
             'all_sizes': response.css('div.sizespots__item.js-click-variant.at-dv-size-button::text').extract(),
             'image_urls': response.css('span.l-pointer::attr(data-image)').extract(),
-            'all_colors': response.css('div.cj-slider__item.js-click-variant.at-dv-color.colorspots__item > img.js-slider__unveil::attr(alt)').extract()
+            'all_colors': response.css(
+                'div.cj-slider__item.js-click-variant.at-dv-color.colorspots__item > img.js-slider__unveil::attr(alt)'
+                ).extract(),
+            'description': response.css('div.details__box__desc.at-dv-artDes.l-pr-10 > p::text').extract_first(),
+            #'reviews': response.css('div.bv-item__content::text').extract(),
         }
         yield ProductItem(
             title = product_details['title'],
@@ -42,5 +46,7 @@ class SheegoSpider(scrapy.Spider):
                             for index, url in enumerate(product_details['image_urls'])
                         ],
             all_sizes = product_details['all_sizes'],
-            all_colors = product_details['colors']
+            all_colors = product_details['all_colors'],
+            description = product_details['description'],
+            #reviews = product_details['reviews'],
             )
