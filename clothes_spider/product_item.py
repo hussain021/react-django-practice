@@ -8,5 +8,4 @@ class ProductItem(scrapy.Item):
     all_sizes = scrapy.Field()
     all_colors = scrapy.Field()
     description = scrapy.Field()
-    ratings = scrapy.Field()
-    reviews = scrapy.Field()
+    currency = scrapy.Field()

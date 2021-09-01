@@ -15,8 +15,8 @@ class SheegoSpider(scrapy.Spider):
             'section.cj-product.js-product-box.js-product-box--list.js-unveil-plbox.at-product-box'
             ):
             single_product_url = self.get_single_product_url(product)
-            yield scrapy.Request(url='https://sheego.de/{product_url}'.format(
-                product_url=single_product_url),
+            yield scrapy.Request(
+                url='https://sheego.de/{product_url}'.format(product_url=single_product_url),
                 callback=self.parse_product
                 )
 
@@ -35,12 +35,13 @@ class SheegoSpider(scrapy.Spider):
             'description': self.get_description(response),
         }
         yield ProductItem(
-            title = self.stripping((product_details['title'])),
-            price = product_details['price'], 
+            title = self.cleaning([product_details['title']])[0],
+            price = self.cleaning_and_casting([product_details['price'][:-2]])[0], 
+            currency = self.cleaning([product_details['price'][-2:]])[0],
             image_urls = self.format_image_urls(product_details['image_urls']),
-            all_sizes = self.stripping_and_int_casting(product_details['all_sizes']),
-            all_colors = product_details['all_colors'],
-            description = product_details['description'],
+            all_sizes = self.cleaning_and_casting(product_details['all_sizes']),
+            all_colors = self.cleaning(product_details['all_colors']),
+            description = self.cleaning([product_details['description']])[0],
             )
 
     def get_single_product_url(self, product):
@@ -50,7 +51,7 @@ class SheegoSpider(scrapy.Spider):
         return response.css('span.p-details__name.l-text-1.at-name::text').extract_first()
     
     def get_price(self, response):
-        return response.css('span.l-subline-2.l-bold.product__price__current.at-lastprice::text').extract_first()
+        return response.css('span.l-subline-2.l-bold.product__price__current.at-lastprice::text').extract_first()             
 
     def get_all_sizes(self, response):
         return response.css('div.sizespots__item.js-click-variant.at-dv-size-button::text').extract()
@@ -66,14 +67,17 @@ class SheegoSpider(scrapy.Spider):
     def get_description(self, response):
         return response.css('div.details__box__desc.at-dv-artDes.l-pr-10 > p::text').extract_first()
 
-    def stripping_and_int_casting(self, all_sizes):
-        return [int(x) for x in list(map(str.strip, all_sizes))]
-
-    def stripping(self, title):
-        return str.strip(title)
-
-    def format_image_urls(relf, image_urls):
+    def cleaning_and_casting(self, numeric_list):
+        numeric_list=[size.replace(',','.') for size in numeric_list]
         return [
+            eval(x) for x in list(map((str.strip), numeric_list))
+            ]
+
+    def cleaning(self, string_list:list):
+        return list(map((str.strip), string_list))
+
+    def format_image_urls(self, image_urls):
+        return [    
             'https:{image_url}'.format(
             image_url=image_urls[index])
             for index, url in enumerate(image_urls)
