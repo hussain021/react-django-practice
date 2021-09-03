@@ -12,26 +12,24 @@ def main():
     parser.add_argument('-a', type=str)
     parser.add_argument('-c', type=str)
     args = parser.parse_args()
-    
+
     if not (args.a or args.e or args.c):
         print('No arguments found!')
         return
 
-    if (len(args.e)!=4 and len(args.a)<=5 and len(args.c)<=5):
-        print ('Invalid Argument(2)!')
-
-    if args.c:
+    if args.c and len(args.c) >= 5:
         month_and_year = get_year_and_month(args.c)
         service.get_detailed_month(month_and_year['year'], month_and_year['month'])
 
-    if args.e:
+    if args.e and len(args.e) == 4:
         service.get_yearly_data(str(args.e))
 
-    if args.a:
+    if args.a and len(args.a) >= 5:
         month_and_year = get_year_and_month(args.a)
         service.get_month_average(month_and_year['year'], month_and_year['month'])
 
     return 0
+
 
 def get_year_and_month(argument):
     """Returns the year and month in form of a dict

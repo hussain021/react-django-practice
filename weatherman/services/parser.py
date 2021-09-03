@@ -1,4 +1,3 @@
-from posixpath import abspath
 import os
 
 from model.monthly_data import MonthlyData
