@@ -1,7 +1,7 @@
 import scrapy
 
-from clothes_spider.product_item import ProductItem
-from clothes_spider.urls import URLS
+from sheego_scrapper.clothes_spider.product_item import ProductItem
+from sheego_scrapper.clothes_spider.urls import URLS
 
 
 class SheegoSpider(scrapy.Spider):
