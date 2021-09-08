@@ -6,18 +6,18 @@ from datetime import datetime
 from best_buy_scrapper.items import ProductItem
 
 
-class SpiderSpider(CrawlSpider):
-    name = "spider"
+class BestBuySpider(CrawlSpider):
+    name = "best_buy_spider"
     allowed_domains = [
         "bestbuy.com",
         "pisces.bbystatic.com",
     ]  # Second link is where images are accessed.
     start_urls = ["https://www.bestbuy.com/"]
     rules = [
-        Rule(LinkExtractor(allow="site/"), callback="parse_filter_book", follow=True)
+        Rule(LinkExtractor(allow="site/"), callback="parse_product", follow=True)
     ]
 
-    def parse_filter_book(self, response):
+    def parse_product(self, response):
         is_product = response.css(
             "a.c-button-link.c-button.btn-brand-link::text"
         ).extract_first()
@@ -72,19 +72,19 @@ class SpiderSpider(CrawlSpider):
         return response.css("h1.heading-5.v-fw-regular::text").extract_first()
 
     def get_description(self, response):
-        description1 = response.css("div.product-description::text").extract_first()
-        description2 = response.css(
+        desc_using_way_prod = response.css("div.product-description::text").extract_first()
+        desc_using_html_frag = response.css(
             "div.html-fragment > div > div::text"
         ).extract_first()
-        return description1 if description1 is not None else description2
+        return desc_using_way_prod if desc_using_way_prod is not None else desc_using_html_frag
 
     def get_specifications(self, response):
         titles = response.css(
             "div.row-title::text, div.row-title > span.display-name.v-fw-medium.body-copy::text"
         ).extract()
-        titles = list(filter(lambda a: a != " ", titles))
+        titles = list(filter(lambda title: title != " ", titles))
         values = response.css("div.row-value.col-xs-6.v-fw-regular::text").extract()
-        return {titles[i]: values[i] for i in range(len(titles))}
+        return {titles[index]: values[index] for index in range(len(titles))}
 
     def get_image_urls(self, response):
         return [response.css("img.primary-image::attr(src)").extract_first()]
