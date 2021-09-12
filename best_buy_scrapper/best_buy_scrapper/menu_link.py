@@ -22,10 +22,12 @@ class MenuLink:
                     for inner_link in link["childNodes"]:
                         if inner_link["link"].get("url"):
                             self.list_of_links.append(
-                                "https://bestbuy.com" + inner_link["link"]["url"]
+                                "https://bestbuy.com{}".format(
+                                    inner_link["link"]["url"]
+                                )
                             )
                 else:
                     if link["link"].get("url"):
                         self.list_of_links.append(
-                            "https://bestbuy.com" + link["link"]["url"]
+                            "https://bestbuy.com{}".format(link["link"]["url"])
                         )

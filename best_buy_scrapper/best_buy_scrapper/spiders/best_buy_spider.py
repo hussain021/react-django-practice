@@ -17,7 +17,7 @@ class BestBuySpider(scrapy.Spider):
         "pisces.bbystatic.com",
     ]  # Second link is where images are accessed.
     menu_link = MenuLink()
-    start_urls= menu_link.list_of_links
+    start_urls = menu_link.list_of_links
 
     def parse(self, response):
         """Initiator for the spider, Where cookies are added to the request.
@@ -26,28 +26,11 @@ class BestBuySpider(scrapy.Spider):
         response -- contains the response of the starting urls
         """
         cookieJar = response.meta.setdefault("cookie_jar", CookieJar())
-        cookieJar.set_cookie(
-            cookie=Cookie(
-                name="intl_splash",
-                value="false",
-                path="/",
-                domain="www.bestbuy.com",
-                expires=None,
-                version=0,
-                port=None,
-                port_specified=False,
-                domain_specified=True,
-                domain_initial_dot=False,
-                path_specified=True,
-                secure=False,
-                discard=True,
-                comment=None,
-                comment_url=None,
-                rest={"HttpOnly": None},
-            )
-        )
+        cookieJar.set_cookie(cookie=self.get_intl_cookie())
         cookieJar.extract_cookies(response, response.request)
-        request = self.send_request(response.url, self.parse_list_of_products, cookieJar)
+        request = self.send_request(
+            response.url, self.parse_list_of_products, cookieJar
+        )
         yield request
 
     def parse_list_of_products(self, response):
@@ -56,15 +39,16 @@ class BestBuySpider(scrapy.Spider):
         Keyword arguments:
         response -- contains the response of the the page which contains multiple products
         """
-        product_url_list = response.css("h4.sku-header > a::attr(href)").extract()
-        if len(product_url_list) == 0:#There are two types of Product listings, If one is empty, Choose the other
-             product_url_list=response.css("a.wf-offer-link.v-line-clamp ::attr(href)").extract()
-            
-        product_url_list = ['https://www.bestbuy.com/{}'.format(link) for link in product_url_list]
+        product_url_list = [
+            "https://www.bestbuy.com/{}".format(link)
+            for link in self.get_product_url_list(response)
+        ]
         cookie_jar = response.meta.setdefault("cookie_jar", CookieJar())
         cookie_jar.extract_cookies(response, response.request)
         for product_url in product_url_list:
-            request = self.send_request(product_url, self.parse_product, cookie_jar)#function to send request with cookies
+            request = self.send_request(
+                product_url, self.parse_product, cookie_jar
+            )  # function to send request with cookies
             yield request
 
     def parse_product(self, response):
@@ -78,24 +62,7 @@ class BestBuySpider(scrapy.Spider):
             "a.c-button-link.c-button.btn-brand-link::text"
         ).extract_first()
         if is_product:
-            skus = response.xpath(
-                '//script[contains(text(),"priceCurrency")]/text()'
-            ).extract_first()
-            skus = json.loads(skus)
-            product.add_value("language", self.get_language(response))
-            product.add_value("category", self.get_categories(response))
-            product.add_value("brand", self.get_brand(response))
-            product.add_value("url", response.url)
-            product.add_value(
-                "scraped_date", datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-            )
-            product.add_value("title", self.get_title(response))
-            product.add_value("description", self.get_description(response))
-            product.add_value("specification", self.get_specifications(response))
-            product.add_value("image_urls", self.get_image_urls(response))
-            product.add_value("skus", self.get_skus_details(skus))
-
-            return product.load_item()
+            return self.get_value_of_product(response, product)
 
     def get_skus_details(self, skus):
         return {
@@ -158,6 +125,55 @@ class BestBuySpider(scrapy.Spider):
             url,
             callback=callback,
             meta={"dont_merge_cookies": True, "cookie_jar": cookie_jar},
-                )
+        )
         cookie_jar.add_cookie_header(request)
         return request
+
+    def get_intl_cookie(self):
+        return Cookie(
+            name="intl_splash",
+            value="false",
+            path="/",
+            domain="www.bestbuy.com",
+            expires=None,
+            version=0,
+            port=None,
+            port_specified=False,
+            domain_specified=True,
+            domain_initial_dot=False,
+            path_specified=True,
+            secure=False,
+            discard=True,
+            comment=None,
+            comment_url=None,
+            rest={"HttpOnly": None},
+        )
+
+    def get_product_url_list(self, response):
+        product_url_list = response.css("h4.sku-header > a::attr(href)").extract()
+        if (
+            len(product_url_list) == 0
+        ):  # There are two types of Product listings, If one is empty, Choose the other
+            product_url_list = response.css(
+                "a.wf-offer-link.v-line-clamp ::attr(href)"
+            ).extract()
+
+        return product_url_list
+
+    def get_value_of_product(self, response, product):
+        skus = response.xpath(
+            '//script[contains(text(),"priceCurrency")]/text()'
+        ).extract_first()
+        skus = json.loads(skus)
+        product.add_value("language", self.get_language(response))
+        product.add_value("category", self.get_categories(response))
+        product.add_value("brand", self.get_brand(response))
+        product.add_value("url", response.url)
+        product.add_value("scraped_date", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+        product.add_value("title", self.get_title(response))
+        product.add_value("description", self.get_description(response))
+        product.add_value("specification", self.get_specifications(response))
+        product.add_value("image_urls", self.get_image_urls(response))
+        product.add_value("skus", self.get_skus_details(skus))
+
+        return product.load_item()
