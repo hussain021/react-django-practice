@@ -1,15 +1,15 @@
 import requests
 import json
-from best_buy_scrapper.constants import headers, params, cookies
+from best_buy_scrapper.constants import HEADERS, PARAMS, COOKIES
 
 
 class MenuLink:
     def __init__(self):
         response = requests.get(
             "https://www.bestbuy.com/api/tcfb/model.json",
-            headers=headers,
-            params=params,
-            cookies=cookies,
+            headers=HEADERS,
+            params=PARAMS,
+            cookies=COOKIES,
         )
         js = json.loads(response.text)
         self.list_of_links = []

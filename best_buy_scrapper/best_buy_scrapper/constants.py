@@ -1,4 +1,4 @@
-cookies = {
+COOKIES = {
     "52245": "",
     "SID": "8cd64d00-5b4a-41af-acfb-20019b539180",
     "bm_sz": "BD561274CA20355BCAAE589A45E12343~YAAQHZ4QAo/zBH17AQAAm9iGyg3p0BI46Mmqlh6OwzAbjQpA0ZHMxLeTMscAXwBXbJYCFdnEI/mHPZONjWveHGhGGyGGbZJ\
@@ -51,7 +51,7 @@ cookies = {
     "rxvt": "1631193210426|1631190444651",
     "dtPC": "9{391410404_965h1vGBFGSPOEPUMKKNJQQFUMFRCSVGJIJSSH-0e9}",
 }
-headers = {
+HEADERS = {
     "authority": "www.bestbuy.com",
     "pragma": "no-cache",
     "cache-control": "no-cache",
@@ -66,7 +66,7 @@ headers = {
     "referer": "https://www.bestbuy.com/",
     "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
 }
-params = (
+PARAMS = (
     (
         "paths",
         '[["shop","scds","v2","page","byView","tenants","bbypres","pages","globalnavigationv5sv","view","large","header"]]',
