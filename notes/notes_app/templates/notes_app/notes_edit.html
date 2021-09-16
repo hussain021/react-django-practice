@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href='/notes_app'>Back to main page</a>
+    <hr>
+    <form method="POST" action = {% url 'edit' %}>
+        {%  csrf_token  %}
+        <input type="text" id="id" name="id" value={{ id }} readonly><hr>
+        <input type="text" id="note_title" name="note_title" value="{{ note_title }}"><br>
+        <input type="text" id="note_text" name="note_text" value="{{ note_text }}"><br>
+        <input type="checkbox" id="visibility" name="visibility" value="True">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
