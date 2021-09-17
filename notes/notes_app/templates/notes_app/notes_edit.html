@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
     <hr>
-    <form method="POST" class="form1" action = {% url 'edit' %}>
+    <h1 style="text-align: center;">Edit Note!</h1>
+
+    <form method="POST" style="top:40%" class="form1" action = {% url 'edit' %}>
         {%  csrf_token  %}
         <table>
             <tr>
