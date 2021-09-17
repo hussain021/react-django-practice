@@ -2,33 +2,38 @@
 {% block content %}
     <hr>
     {% if user.is_authenticated %}
-    <p>My notes!</p>       
-    {% endif %}
+    <h1><div style="text-align: center; color: black;">My Notes!</div></h1>       
+    
     <form method="POST" action = {% url 'edit_or_delete' %}>
         {% csrf_token %}
         <table style="border-spacing: 90px 10px;">
-            {% for note in my_notes %}
-              {% cycle '<tr>' '' '' '' %}
-                <td>
-                    <table class= "warning">
-                        <tr><td >{{note.note_title}}</td></tr>
-                        <tr> <td style="padding-left: 10%; font-size: larger;">{{ note.note_text }}</td></tr>
-                        <tr><td style="text-align: right;">{{note.created_by}}</td></tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td style="width: 10%;"><div style="text-align: left;"><button class ="button2" type="submit" name="delete_items" value="{{ note.pk }}">Delete</button></div></td>
-                            <td><div style="text-align: right;"><button class="button2" style="background-color: aqua; color: black;" type="submit" name="edit_items" value="{{ note.pk }}">Edit</button></div></td>
-                        </tr>
-                    </table>
-                </td>
-              {% cycle '' '' '' '</tr>' %}
+            {% if my_notes%}
+              {% for note in my_notes %}
+                {% cycle '<tr>' '' '' '' %}
+                  <td>
+                      <table class= "note_card">
+                          <tr><td style="font-size: xx-large;">{{note.note_title}}</td></tr>
+                          <tr> <td style="padding-left: 10%; font-size: larger;">{{ note.note_text }}</td></tr>
+                          <tr><td style="text-align: right;">{{note.created_by}}</td></tr>
+                      </table>
+                      <table>
+                          <tr>
+                              <td style="width: 10%;"><div style="text-align: left;"><button class ="button2" type="submit" name="delete_items" value="{{ note.pk }}">Delete</button></div></td>
+                              <td><div style="text-align: right;"><button class="button2" style="background-color: aqua; color: black;" type="submit" name="edit_items" value="{{ note.pk }}">Edit</button></div></td>
+                          </tr>
+                      </table>
+                  </td>
+                {% cycle '' '' '' '</tr>' %}
             {% endfor %}
-          </table>
+            {% else %}
+            <h1 style="font-size: xx-large; text-align: center;">You have no notes!</h1>
+            {% endif %}
+        </table>
         
     </form>
+    {% endif %}
     <hr>
-    all public notes
+    <h1><div style="text-align: center; color: black;">Public Notes!</div></h1> 
 
     <form method="POST">
         {% csrf_token %}
@@ -38,7 +43,7 @@
                 {% for note in public_notes %}
                   {% cycle '<tr>' '' '' '' %}
                     <td>
-                        <table class= "warning">
+                        <table class= "note_card">
                             <tr><td >{{note.note_title}}</td></tr>
                             <tr> <td style="padding-left: 10%; font-size: larger;">{{ note.note_text }}</td></tr>
                             <tr><td style="text-align: right;">{{note.created_by}}</td></tr>

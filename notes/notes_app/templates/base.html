@@ -14,16 +14,16 @@
             background-color: #333;
             }
 
-            li {
+        li {
             float: left;
             border-right:1px solid #bbb;
             }
 
-            li:last-child {
-            border-right: none;
+        li:last-child {
+         border-right: none;
             }
 
-            li a {
+        li a {
             display: block;
             color: white;
             text-align: center;
@@ -31,81 +31,84 @@
             text-decoration: none;
             }
 
-            li a:hover:not(.active) {
-            background-color: #111;
+        li a:hover:not(.active) {
+                background-color: #111;
             }
 
-            .active {
-            background-color: #04AA6D;
+        .active {
+        background-color: #04AA6D;
             }
         .button1 {
-        background-color: #1abc9c;
-        color: white;
-        border: 2px solid #4CAF50; /* Green */
-        width: 120px;
-        height: 75px;
-        font-size: 20px;
-        }
+            background-color: #1abc9c;
+            color: white;
+            border: 2px solid #4CAF50; /* Green */
+            width: 120px;
+            height: 75px;
+            font-size: 20px;
+            }
         .button2 {
-        background-color: red;
-        color: white;
-        border: 2px solid red;
-        width: 50px;
-        height: 30px;
-        font-size: 10px;
-        }
+            background-color: red;
+            color: white;
+            border: 2px solid red;
+            width: 50px;
+            height: 30px;
+            font-size: 10px;
+            border-radius: 10px;
+            }
         .button3 {
-        background-color: aqua; 
-        color: black;
-        border: 2px solid red;
-        width: 50px;
-        height: 30px;
-        font-size: 10px;
-        }
-    .warning {
-        background-color: #ffffcc;
-        border-top: 6px solid #ffeb3b;
-        border: 6px solid #ffeb3b;
-        width: 300px;
-        height: 200px;
-        border-radius:20px;
-      }
-      .header {
-        padding: 30px;
-        text-align: center;
-        background: #1abc9c;
-        color: white;
-        font-size: 20px;
-        }
+            background-color: aqua; 
+            color: black;
+            border: 2px solid red;
+            width: 50px;
+            height: 30px;
+            font-size: 10px;
+            border-radius: 10px;
+            }
+        .note_card {
+            background-color: #ffffcc;
+            border-top: 6px solid #ffeb3b;
+            border: 6px solid #ffeb3b;
+            width: 300px;
+            height: 200px;
+            border-radius:20px;
+            }
+        .header {
+            padding: 30px;
+            text-align: center;
+            background: #1abc9c;
+            color: white;
+            font-size: 20px;
+            }
         
         .form1 { 
             position:fixed;
             top:50%;
             left:45%;
-            width:250px;
+            width:350px;
             }
     
     </style>
     <div class="header">
-        <h1><button class="button1" onclick="document.location='/notes_app'">Notes App</a></h1>
+        <h1><button class="button1" onclick="document.location='/'">Notes App</a></h1>
         <p>Create, Edit, Store and delete notes</p>
-      </div>
-      <ul class="ul1">
-        <li><a class="active" href="/notes_app">Home</a></li>
-        <li><a href={% url 'create' %}>Create Note</a></li>
-        {% if user.is_authenticated %}
-            <li style="float:right"><a href= {% url 'logout' %}>Logout</a></li>
-            <li style="float:right"><a href="#about">Welcome {{user.username}}!</a></li>
-        {% elif request.path == "/login/"%}
+    </div>
+    <ul class="ul1">
+    <li><a class="active" href={% url 'index' %}>Home</a></li>
+    <li><a href={% url 'create' %}>Create Note</a></li>
+    {% if user.is_authenticated %}
+        <li style="float:right"><a href= {% url 'logout' %}>Logout</a></li>
+        <li style="float:right"><a href="">Welcome {{user.username}}!</a></li>
+        <li style="float:right"><a href={% url 'edit_profile' %}>Change Password!</a></li>
+    {% elif request.path == "login/"%}
         <li style="float:right"><a href= {% url 'signup' %}>Sign Up</a></li>
-        {% elif request.path == "/signup/"%}
+    {% elif request.path == "signup/"%}
         <li style="float:right"><a href= {% url 'login' %}>Login</a></li>
-        {% else %}
+    {% else %}
         <li style="float:right"><a href= {% url 'signup' %}>Sign Up</a></li>
         <li style="float:right"><a href= {% url 'login' %}>Login</a></li>
-        {% endif %}
-        
-      </ul>
+    {% endif %}
+
+    </ul>
 </head>
 <body style="background-color:powderblue;">
     

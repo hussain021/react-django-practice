@@ -127,6 +127,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'notes_app.User'
 
-LOGIN_REDIRECT_URL = '/notes_app'
+LOGIN_REDIRECT_URL = 'index'
 
 LOGOUT_REDIRECT_URL = '/login'

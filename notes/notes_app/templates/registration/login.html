@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 
-    {{message.as_p}}
-    {% if message %}
-        <p style="font-size: xx-large; color: yellow;">{{message}}</p>
+    {% if user.is_authenticated %}
+        <h1 style="font-size: xx-large; text-align: center;">Please logout first!</h1>
+    {% else %}
+        <form class="form1" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div style="text-align: center;">
+                <button  class= "button3" type="submit" style="text-align: center;">Login</button>
+            </div>
+        </form>
     {% endif %}
-    <form class="form1" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div style="text-align: center;">
-            <button  class= "button3" type="submit" style="text-align: center;">Login</button>
-        </div>
-    </form>
 {% endblock content %}

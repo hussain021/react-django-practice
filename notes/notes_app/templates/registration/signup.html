@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
+
+{% if user.is_authenticated %}
+    <h1 style="font-size: xx-large; text-align: center;">Please logout first!</h1>
+{% else %}
     <form class="form1" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
@@ -7,4 +11,5 @@
             <button type="submit">Sign up</button>
         </div>
     </form>
+{% endif %}
 {% endblock content %}
