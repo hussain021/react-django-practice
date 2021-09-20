@@ -1,16 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 style="text-align: center;">Login:</h1>
+<h1 class="center">Login:</h1>
 
-    {% if user.is_authenticated %}
-        <h1 style="font-size: xx-large; text-align: center;">Please logout first!</h1>
-    {% else %}
-        <form class="form1" method="POST">
+        <form class="form_styling" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <div style="text-align: center;">
-                <button  class= "button3" type="submit" style="margin-left: -70px; text-align: center;">Login</button>
+            <div class="center">
+                <button  class= "button3 margin_minus_left center" type="submit">Login</button>
             </div>
         </form>
-    {% endif %}
 {% endblock content %}

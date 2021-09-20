@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
     <hr>
-    <h1 style="text-align: center;">Edit Note!</h1>
+    <h1 class="center">Edit Note!</h1>
 
-    <form method="POST" style="top:40%" class="form1" action = {% url 'edit' %}>
+    <form method="POST" class="form_styling top40" action = {% url 'notes:edit' %}>
         {%  csrf_token  %}
         <table>
             <tr>
@@ -24,11 +24,13 @@
             <br>
             <tr>
                 <td><p>Visibility:</p></td>
-                <td><input type="checkbox" id="visibility" name="visibility" value="True"></td>
+                <td><input type="radio" name="visibility" value="public">Public</td>
+                <td><input type="radio" name="visibility" value="private">Private</td>
             </tr>
             <tr>
-                <td colspan="2" style="text-align: center;"><button type="submit">Submit</button></td>
+                <td colspan="2" class="center"><button type="submit">Submit</button></td>
             </tr>
         </table>
     </form>
     {% endblock content %}
+    

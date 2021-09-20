@@ -17,14 +17,14 @@ from django.contrib import admin
 from django.urls import include, path
 from django.contrib.auth.views import LoginView, LogoutView
 
-from notes_app.views import SignUpView, edit_profile
+from notes_app.views import EditProfile
+from notes_app.views import SignUpView
 
 urlpatterns = [
-    path('',include('notes_app.urls'), name='index'),
-    #path('notes_app/', include('notes_app.urls')),
+    path('',include('notes_app.urls'), name='notes'),
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(), name='login'),
     path('signup/', SignUpView.as_view(), name='signup'),
     path('logout/',LogoutView.as_view(), name='logout'),
-    path('edit_profile/', edit_profile, name='edit_profile'),
+    path('edit-profile/', EditProfile.as_view(), name='edit_profile'),
 ]

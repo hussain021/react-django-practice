@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
     <hr>
-    <h1 style="text-align: center;">Create a new Note!</h1>
-    <form class="form1" method="POST">
+    <h1 class="center">Create a new Note!</h1>
+    <form class="form_styling" method="POST">
         {%  csrf_token  %}
         {{form.as_p}}
-        <button class="button3" style="margin-left: 100px; text-align: center;" type="submit">Submit</button>
+        <button class="button3 center margine_left" type="submit">Submit</button>
     </form>
     {% endblock content %}
+    

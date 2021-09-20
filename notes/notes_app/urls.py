@@ -1,11 +1,12 @@
+from notes_app.views import DeleteNote, NotesDetail, EditNote, EditOrDeleteNote, CreateNote
 from django.urls import path
 
-from . import views
+app_name = 'notes'
 
 urlpatterns = [
-    path('', views.notes_details, name='index'),
-    path('create_note/', views.create_note, name='create'),
-    path('delete_note/', views.delete_note, name='delete'),
-    path('edit_note/', views.edit_note, name='edit'),
-    path('edit_or_delete_note/', views.edit_or_delete, name='edit_or_delete')
+    path('', NotesDetail.as_view(), name='index'),
+    path('create-note/', CreateNote.as_view(), name='create'),
+    path('delete-note/', DeleteNote.as_view(), name='delete'),
+    path('edit-note/', EditNote.as_view(), name='edit'),
+    path('edit-or-delete-note/', EditOrDeleteNote.as_view(), name='edit_or_delete')
 ]

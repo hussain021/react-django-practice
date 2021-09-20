@@ -1,0 +1,2 @@
+PUBLIC = 'PB'
+PRIVATE = 'PV'
