@@ -4,22 +4,24 @@
     {% if user.is_authenticated %}
     <h1><div class="center">My Notes!</div></h1>       
     
-    <form method="POST" action = {% url 'notes:edit_or_delete' %}>
+    <form method="POST">
         {% csrf_token %}
-        <table class="border_spacing">
-            {% if my_notes%}
-              {% for note in my_notes %}
+        <table class="border_spacing_90_10">
+            {% if notes.my_notes%}
+              {% for note in notes.my_notes %}
                 {% cycle '<tr>' '' '' '' %}
                   <td>
                       <table class= "note_card">
                           <tr><td class="xx_large_font">{{note.note_title}}</td></tr>
                           <tr> <td class="note_text">{{ note.note_text }}</td></tr>
                           <tr><td class="align_right">{{note.created_by}}</td></tr>
+                          <td colspan="2" class="center"></div><a href="{% url 'notes:note_detail' note.pk %}">Details</a></div></td>
+
                       </table>
                       <table>
                           <tr>
-                              <td class="width10"><div class="align_left"><button class ="button2" type="submit" name="delete_items" value="{{ note.pk }}">Delete</button></div></td>
-                              <td><div class="align_right"><button class="button3" type="submit" name="edit_items" value="{{ note.pk }}">Edit</button></div></td>
+                              <td class="width_10"><div class="align_left"></div><a href="{% url 'notes:delete' note.pk %}">Delete</a></div></td>
+                              <td><div class="align_right"><a href="{% url 'notes:edit' note.pk %}">Edit</a></div></td>
                           </tr>
                       </table>
                   </td>
@@ -39,17 +41,19 @@
         {% csrf_token %}
         
             {% csrf_token %}
-            <table class="border_spacing">
-                {% for note in public_notes %}
-                  {% cycle '<tr>' '' '' '' %}
+            <table class="border_spacing_90_10">
+                {% for note in notes.public_notes %}
+                  {% cycle '<tr>' '' '' '' '' %}
                     <td>
                         <table class= "note_card">
                             <tr><td class="xx_large_font">{{note.note_title}}</td></tr>
                             <tr> <td class="note_text">{{ note.note_text }}</td></tr>
                             <tr><td class="align_right">{{note.created_by}}</td></tr>
+                            <tr><td colspan="2" class="center"></div><a href="{% url 'notes:note_detail' note.pk %}">Details</a></div></td></tr>
+
                         </table>
                     </td>
-                  {% cycle '' '' '' '</tr>' %}
+                  {% cycle '' '' '' '' '</tr>' %}
                 {% endfor %}
               </table>
     </form>

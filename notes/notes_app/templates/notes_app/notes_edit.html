@@ -3,7 +3,7 @@
     <hr>
     <h1 class="center">Edit Note!</h1>
 
-    <form method="POST" class="form_styling top40" action = {% url 'notes:edit' %}>
+    <form method="POST" class="notes_form top_40" action = {% url 'notes:edit' %}>
         {%  csrf_token  %}
         <table>
             <tr>
@@ -28,7 +28,7 @@
                 <td><input type="radio" name="visibility" value="private">Private</td>
             </tr>
             <tr>
-                <td colspan="2" class="center"><button type="submit">Submit</button></td>
+                <td colspan="2" class="blue_button center"><button type="submit">Submit</button></td>
             </tr>
         </table>
     </form>

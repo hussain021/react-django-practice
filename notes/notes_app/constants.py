@@ -1,2 +1,3 @@
-PUBLIC = 'PB'
-PRIVATE = 'PV'
+PUBLIC = "PB"
+PRIVATE = "PV"
+VISIBILITY = ((PUBLIC, "public"), (PRIVATE, "private"))

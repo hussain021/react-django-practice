@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="heading">Note Delete?</h1>
+    <form  method="post">
+    {% csrf_token %}
+    <h2 class="center">Are you sure you want to delete this note?</h2>
+    <div class="center"><input class="blue_button" type="submit"  value="Submit"/></div>
+    </form>
+    {% endblock content %}
+    

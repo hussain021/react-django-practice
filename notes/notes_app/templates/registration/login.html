@@ -2,11 +2,11 @@
 {% block content %}
 <h1 class="center">Login:</h1>
 
-        <form class="form_styling" method="POST">
+        <form class="notes_form" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
             <div class="center">
-                <button  class= "button3 margin_minus_left center" type="submit">Login</button>
+                <button  class= "blue_button margin_left_minus_70 center" type="submit">Login</button>
             </div>
         </form>
 {% endblock content %}

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from notes_app.constants import PRIVATE, PUBLIC
+from notes_app.constants import VISIBILITY
 
 
 class User(AbstractUser):
@@ -18,7 +18,6 @@ class Note(models.Model):
     created_by = models.ForeignKey(
         verbose_name="created by", to=User, on_delete=models.CASCADE
     )
-    VISIBILITY = ((PUBLIC, "public"), (PRIVATE, "private"))
     visibility = models.CharField(
         max_length=10, verbose_name="visibility", default=True, choices=VISIBILITY
     )
