@@ -1,14 +1,11 @@
-from django.http import request
 from notes_app.forms import User
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import Q
-from django.shortcuts import redirect, render, reverse
-from django.views import generic
+from django.shortcuts import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from django.views.generic.base import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from notes_app.constants import PRIVATE, PUBLIC
@@ -16,12 +13,12 @@ from notes_app.forms import NotesUserCreationForm
 from notes_app.models import Note
 
 
-class SignUpView(generic.CreateView):
+class SignUpView(CreateView):
     template_name = "registration/signup.html"
     form_class = NotesUserCreationForm
 
     def get_success_url(self):
-        return reverse("/login")
+        return reverse("login")
 
 
 class EditProfile(UpdateView):
