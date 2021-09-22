@@ -40,7 +40,6 @@ class EditProfile(UpdateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        print("form invalid")
         messages.error(self.request, "Please correct the error below.")
         return super().form_invalid(form)
 
