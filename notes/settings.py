@@ -135,7 +135,7 @@ LOGIN_REDIRECT_URL = 'notes:index'
 
 LOGOUT_REDIRECT_URL = '/login'
 
-PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
+PROJECT_ROOT   =   Path(__file__).resolve().parent.parent
 STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
