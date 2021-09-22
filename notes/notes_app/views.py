@@ -1,3 +1,5 @@
+from django.http import request
+from notes_app.forms import User
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -22,25 +24,25 @@ class SignUpView(generic.CreateView):
         return reverse("/login")
 
 
-class EditProfile(View):
+class EditProfile(UpdateView):
     template_name = "registration/edit_profile.html"
+    model = User
+    success_url = "/login"
 
-    def get(self, request):
-        if request.user.is_authenticated:
-            form = PasswordChangeForm(request.user)
-            return render(request, self.template_name, {"form": form})
-        else:
-            return redirect("/login")
+    def get_form(self, form_class=None):
+        form = PasswordChangeForm(self.request.user, self.request.POST)
+        return form
 
-    def post(self, request):
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            messages.success(request, "Your password was successfully updated!")
-            return redirect("notes:index")
-        else:
-            messages.error(request, "Please correct the error below.")
+    def form_valid(self, form):
+        user = form.save()
+        update_session_auth_hash(self.request, user)
+        messages.success(self.request, "Your password was successfully updated!")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print("form invalid")
+        messages.error(self.request, "Please correct the error below.")
+        return super().form_invalid(form)
 
 
 class NotesView(ListView):
