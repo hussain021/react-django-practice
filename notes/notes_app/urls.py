@@ -1,8 +1,6 @@
 from notes_app.views import NotesView, EditNote, CreateNote, DeleteNote, NoteDetailView
 from django.urls import path
 
-from notes_app import views
-
 app_name = "notes"
 
 urlpatterns = [
