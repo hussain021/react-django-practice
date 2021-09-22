@@ -8,7 +8,6 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from notes_app.constants import PRIVATE, PUBLIC
 from notes_app.forms import NotesUserCreationForm
 from notes_app.models import Note
 
