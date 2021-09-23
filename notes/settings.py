@@ -32,7 +32,9 @@ ALLOWED_HOSTS = ['protected-taiga-97318.herokuapp.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'ckeditor',
     'notes_app.apps.NotesAppConfig',
+    'django_wysiwyg',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -146,3 +148,16 @@ STATICFILES_DIRS = (
 
 #  Add configuration for static files storage using whitenoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+DJANGO_WYSIWYG_FLAVOR = "ckeditor"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ],
+        'height': 100,
+        'width': 300,
+    },
+}

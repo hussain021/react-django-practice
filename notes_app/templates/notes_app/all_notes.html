@@ -6,31 +6,26 @@
     
     <form method="POST">
         {% csrf_token %}
-        <table class="border_spacing_90_10">
-            {% if notes.my_notes%}
-              {% for note in notes.my_notes %}
-                {% cycle '<tr>' '' '' '' %}
-                  <td>
-                      <table class= "note_card">
-                          <tr><td class="xx_large_font">{{note.note_title}}</td></tr>
-                          <tr> <td class="note_text">{{ note.note_text }}</td></tr>
-                          <tr><td class="align_right">{{note.created_by}}</td></tr>
-                          <td colspan="2" class="center"></div><a href="{% url 'notes:note_detail' note.pk %}">Details</a></div></td>
+        <div class="flex-container">
+                {% if notes.my_notes%}
+                {% for note in notes.my_notes %}
+                        <table class= "note_card">
+                            <tr><td class="xx_large_font">{{note.note_title}}</td></tr>
+                            <tr> <td colspan="10" class="note_text">{{ note.note_text }}</td></tr>
+                            <tr><td class="align_right">{{note.created_by}}</td></tr>
+                            <td colspan="2" class="center"></div><a href="{% url 'notes:note_detail' note.pk %}">Details</a></div></td>
 
-                      </table>
-                      <table>
-                          <tr>
-                              <td class="width_10"><div class="align_left"></div><a href="{% url 'notes:delete' note.pk %}">Delete</a></div></td>
-                              <td><div class="align_right"><a href="{% url 'notes:edit' note.pk %}">Edit</a></div></td>
-                          </tr>
-                      </table>
-                  </td>
-                {% cycle '' '' '' '</tr>' %}
-            {% endfor %}
-            {% else %}
-            <h1 class="heading">You have no notes!</h1>
-            {% endif %}
-        </table>
+                        
+                            <tr>
+                                <td class="width_10"><div class="align_left"></div><a href="{% url 'notes:delete' note.pk %}">Delete</a></div></td>
+                                <td><div class="align_right"><a href="{% url 'notes:edit' note.pk %}">Edit</a></div></td>
+                            </tr>
+                        </table>
+                {% endfor %}
+                {% else %}
+                <h1 class="heading">You have no notes!</h1>
+                {% endif %}
+    </div>
         
     </form>
     {% endif %}

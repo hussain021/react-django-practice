@@ -24,6 +24,7 @@ urlpatterns = [
     path('',include('notes_app.urls'), name='notes'),
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(), name='login'),
+    path('accounts/login/', LoginView.as_view(), name='login'),
     path('signup/', SignUpView.as_view(), name='signup'),
     path('logout/',LogoutView.as_view(), name='logout'),
     path('edit-profile/<pk>/', EditProfile.as_view(), name='edit_profile'),

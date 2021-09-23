@@ -14,8 +14,8 @@
     </div>
     <ul class="ul_for_base">
     <li><a class="active" href={% url 'notes:index' %}>Home</a></li>
-    <li><a href={% url 'notes:create' %}>Create Note</a></li>
     {% if user.is_authenticated %}
+        <li><a href={% url 'notes:create' %}>Create Note</a></li>
         <li class="float_right"><a href= {% url 'logout' %}>Logout</a></li>
         <li class="float_right"><a href="">Welcome {{user.username}}!</a></li>
         <li class="float_right"><a href={% url 'edit_profile' user.pk %}>Change Password!</a></li>

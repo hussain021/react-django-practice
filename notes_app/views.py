@@ -7,12 +7,14 @@ from django.shortcuts import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from notes_app.forms import NotesUserCreationForm
 from notes_app.models import Note
 
 
-class SignUpView(CreateView):
+class SignUpView(LoginRequiredMixin, CreateView):
     template_name = "registration/signup.html"
     form_class = NotesUserCreationForm
 
@@ -20,7 +22,7 @@ class SignUpView(CreateView):
         return reverse("login")
 
 
-class EditProfile(UpdateView):
+class EditProfile(LoginRequiredMixin, UpdateView):
     template_name = "registration/edit_profile.html"
     model = User
     success_url = "/login"
@@ -61,7 +63,7 @@ class NoteDetailView(DetailView):
     context_object_name = "note"
 
 
-class CreateNote(CreateView):
+class CreateNote(LoginRequiredMixin, CreateView):
     template_name = "notes_app/notes_create.html"
     success_url = "/"
     model = Note
@@ -72,14 +74,14 @@ class CreateNote(CreateView):
         return super().form_valid(form)
 
 
-class EditNote(UpdateView):
+class EditNote(LoginRequiredMixin, UpdateView):
     template_name = "notes_app/notes_create.html"
     success_url = "/"
     model = Note
     fields = ["note_title", "note_text", "visibility"]
 
 
-class DeleteNote(DeleteView):
+class DeleteNote(LoginRequiredMixin, DeleteView):
     template_name = "notes_app/notes_delete.html"
     success_url = "/"
     model = Note
