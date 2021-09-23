@@ -9,3 +9,4 @@ pathspec==0.7.0
 psycopg2==2.8.6
 pytz==2021.1
 whitenoise==5.3.0
+django-ckeditor==6.1.0
