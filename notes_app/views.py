@@ -14,7 +14,7 @@ from notes_app.forms import NotesUserCreationForm
 from notes_app.models import Note
 
 
-class SignUpView(LoginRequiredMixin, CreateView):
+class SignUpView(CreateView):
     template_name = "registration/signup.html"
     form_class = NotesUserCreationForm
 
