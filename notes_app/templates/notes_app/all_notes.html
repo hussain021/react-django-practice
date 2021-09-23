@@ -11,7 +11,7 @@
                 {% for note in notes.my_notes %}
                         <table class= "note_card">
                             <tr><td class="xx_large_font">{{note.note_title}}</td></tr>
-                            <tr> <td colspan="10" class="note_text">{{ note.note_text }}</td></tr>
+                            <tr> <td colspan="10" class="note_text">{{ note.note_text|safe }}</td></tr>
                             <tr><td class="align_right">{{note.created_by}}</td></tr>
                             <td colspan="2" class="center"></div><a href="{% url 'notes:note_detail' note.pk %}">Details</a></div></td>
 
@@ -34,23 +34,21 @@
 
     <form method="POST">
         {% csrf_token %}
-        
-            {% csrf_token %}
-            <table class="border_spacing_90_10">
+        <div class="flex-container">
+                {% if notes.public_notes%}
                 {% for note in notes.public_notes %}
-                  {% cycle '<tr>' '' '' '' '' %}
-                    <td>
                         <table class= "note_card">
                             <tr><td class="xx_large_font">{{note.note_title}}</td></tr>
-                            <tr> <td class="note_text">{{ note.note_text }}</td></tr>
+                            <tr> <td colspan="10" class="note_text">{{ note.note_text|safe }}</td></tr>
                             <tr><td class="align_right">{{note.created_by}}</td></tr>
-                            <tr><td colspan="2" class="center"></div><a href="{% url 'notes:note_detail' note.pk %}">Details</a></div></td></tr>
-
+                            <td colspan="2" class="center"></div><a href="{% url 'notes:note_detail' note.pk %}">Details</a></div></td>
                         </table>
-                    </td>
-                  {% cycle '' '' '' '' '</tr>' %}
                 {% endfor %}
-              </table>
+                {% else %}
+                <h1 class="heading">No public notes!</h1>
+                {% endif %}
+    </div>
+        
     </form>
     {% endblock content %}
     

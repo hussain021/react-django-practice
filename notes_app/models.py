@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from ckeditor.fields import RichTextField
-from django.db.models.fields import TextField
 from notes_app.constants import VISIBILITY
 
 from django.core.validators import MaxLengthValidator

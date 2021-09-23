@@ -73,7 +73,6 @@ background-color: #04AA6D;
 .flex-container {
     display: flex;
     flex-wrap: wrap;
-    background-color: DodgerBlue;
   }
 
 .header {
