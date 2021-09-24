@@ -1,9 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.core.validators import MaxLengthValidator
+
 from notes_app.constants import VISIBILITY
 
-from django.core.validators import MaxLengthValidator
 
 class User(AbstractUser):
     username = models.CharField(("username"), max_length=30, unique=True,)

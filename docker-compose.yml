@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+    python:
+        image: python:3.9.2
+        volumes:
+            - ./notes:/notes
+        ports:
+            - 8000:8000
+        command: bash -c "cd ./notes && pip install -r requirements.txt && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"

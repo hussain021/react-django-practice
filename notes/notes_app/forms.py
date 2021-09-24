@@ -1,7 +1,9 @@
-from notes_app.models import Note
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UsernameField
+
+from notes_app.models import Note
+
 
 User = get_user_model()
 

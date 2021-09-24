@@ -1,17 +1,17 @@
-from notes_app.forms import User
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 from notes_app.forms import NotesUserCreationForm
 from notes_app.models import Note
+from notes_app.forms import User
 
 
 class SignUpView(CreateView):
