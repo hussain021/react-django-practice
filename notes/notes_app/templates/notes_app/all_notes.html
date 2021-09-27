@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+    <hr>
+    {% if user.is_authenticated %}
+        <h1><div class="center">My Notes!</div></h1>       
+        {% if notes.my_notes%}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="flex-container">
+                        
+                        {% for note in notes.my_notes %}
+                                <table class= "note_card">
+                                    <tr><td class="xx_large_font">{{note.note_title}}</td></tr>
+                                    <tr> <td colspan="10" class="note_text">{{ note.note_text|safe }}</td></tr>
+                                    <tr><td class="align_right">{{note.created_by}}</td></tr>
+                                    <td colspan="2" class="center"></div><a href="{% url 'notes:note_detail' note.pk %}">Details</a></div></td>
+
+                                
+                                    <tr>
+                                        <td class="width_10"><div class="align_left"></div><a href="{% url 'notes:delete' note.pk %}">Delete</a></div></td>
+                                        <td><div class="align_right"><a href="{% url 'notes:edit' note.pk %}">Edit</a></div></td>
+                                    </tr>
+                                </table>
+                        {% endfor %}
+                </div>
+            </form>
+        {% else %}
+            <h1><div class="center">You have no notes!</div></h1>
+        {% endif %}
+    {% endif %}
+    <hr>
+    <h1><div class="center">Public Notes!</div></h1> 
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="flex-container">
+                {% if notes.public_notes%}
+                {% for note in notes.public_notes %}
+                        <table class= "note_card">
+                            <tr><td class="xx_large_font">{{note.note_title}}</td></tr>
+                            <tr> <td colspan="10" class="note_text">{{ note.note_text|safe }}</td></tr>
+                            <tr><td class="align_right">{{note.created_by}}</td></tr>
+                            <td colspan="2" class="center"></div><a href="{% url 'notes:note_detail' note.pk %}">Details</a></div></td>
+                        </table>
+                {% endfor %}
+                {% else %}
+                <h1 class="heading">No public notes!</h1>
+                {% endif %}
+    </div>
+        
+    </form>
+    {% endblock content %}
+    

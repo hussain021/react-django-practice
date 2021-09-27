@@ -1,0 +1,134 @@
+﻿.ul_for_base {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+li {
+    float: left;
+    border-right:1px solid #bbb;
+}
+li:last-child {
+    border-right: none;
+}
+th, td {
+    padding: 15px;
+  }
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+li a:hover:not(.active) {
+    background-color: #111;
+}
+.blue_background {
+    background-color:powderblue;
+}
+.float_right {
+    float:right;
+}
+.active {
+background-color: #04AA6D;
+}
+.green_button {
+    background-color: #1abc9c;
+    color: white;
+    border: 2px solid #4CAF50; /* Green */
+    width: 120px;
+    height: 75px;
+    font-size: 20px;
+}
+.red_button {
+    background-color: red;
+    color: white;
+    border: 2px solid red;
+    width: 50px;
+    height: 30px;
+    font-size: 10px;
+    border-radius: 10px;
+}
+.blue_button {
+    background-color: aqua; 
+    color: black;
+    border: 2px solid red;
+    width: 50px;
+    height: 30px;
+    font-size: 10px;
+    border-radius: 10px;
+}
+.note_card {
+    background-color: #ffffcc;
+    border-top: 6px solid #ffeb3b;
+    border: 6px solid #ffeb3b;
+    width: 300px;
+    height: 200px;
+    border-radius:20px;
+    padding-right: 3%;
+    margin: 10px;
+}
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+.header {
+    padding: 30px;
+    text-align: center;
+    background: #1abc9c;
+    color: white;
+    font-size: 20px;
+}
+.notes_form { 
+    position:fixed;
+    top:50%;
+    left:45%;
+    width:350px;
+}
+.top_40 {
+    top:40%
+}
+.heading {
+    font-size: xx-large;
+    text-align: center;
+}
+.center {
+    text-align: center;
+}
+.width_100 {
+    width: 100px;
+}
+.width_10{
+    width: 10%;
+}
+.margin_left_minus_70 {
+    margin-left: -70px;
+}
+.margin_left_100 {
+    margin-left: 100px;
+}
+.border_spacing_90_10 {
+    border-spacing: 90px 10px;
+}
+.xx_large_font {
+    font-size: xx-large;
+}
+.font_size_60 {
+    font-size: 60px;
+}
+.font_size_20 {
+    font-size: 20px;
+}
+
+.note_text {
+    padding-left: 10%; font-size: larger;
+}
+.align_right {
+    text-align: right;
+}
+.align_left {
+    text-align: left;
+}

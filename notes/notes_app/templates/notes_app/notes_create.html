@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <hr>
+    <h1 class="center">Create a new Note!</h1>
+    <form class="notes_form" method="POST">
+        {%  csrf_token  %}
+        {{form.as_p}}
+        <button class="blue_button center margin_left_100" type="submit">Submit</button>
+    </form>
+
+
+
+
+
+
+    
+{% endblock content %}
+    

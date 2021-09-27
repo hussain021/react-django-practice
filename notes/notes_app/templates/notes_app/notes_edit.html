@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+    <hr>
+    <h1 class="center">Edit Note!</h1>
+
+    <form method="POST" class="notes_form top_40" action = {% url 'notes:edit' %}>
+        {%  csrf_token  %}
+        <table>
+            <tr>
+                <td><p>Id:</p></td>
+                <td><input type="text" id="id" name="id" value={{ id }} readonly></td>
+            </tr>
+            <br>
+            <br>
+            <tr>
+                <td><p>Title:</p></td>
+                <td><input type="text" id="note_title" name="note_title" maxlength="30" value="{{ note_title }}"></td>
+            </tr>
+            <br>
+            <tr>
+                <td><p>Text:</p></td>
+                <td><input type="text" id="note_text" name="note_text" maxlength="100" value="{{ note_text }}"></td>
+            </tr>
+            <br>
+            <tr>
+                <td><p>Visibility:</p></td>
+                <td><input type="radio" name="visibility" value="public">Public</td>
+                <td><input type="radio" name="visibility" value="private">Private</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="blue_button center"><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+    {% endblock content %}
+    

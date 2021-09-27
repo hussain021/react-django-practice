@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<hr>
+<h1 class="center">Change Password:</h1>
+
+<form class="notes_form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="blue_button width_100 margin_left_100 center" type="submit">Update Profile</button>
+  </form>
+  {% endblock content %}
+  

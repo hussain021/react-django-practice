@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'all_app_style.css' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <div class="header">
+        <h1><button class="green_button" onclick="document.location='/'">Notes App</a></h1>
+        <p>Create, Edit, Store and delete notes</p>
+    </div>
+    <ul class="ul_for_base">
+    <li><a class="active" href={% url 'notes:index' %}>Home</a></li>
+    {% if user.is_authenticated %}
+        <li><a href={% url 'notes:create' %}>Create Note</a></li>
+        <li class="float_right"><a href= {% url 'logout' %}>Logout</a></li>
+        <li class="float_right"><a href="">Welcome {{user.username}}!</a></li>
+        <li class="float_right"><a href={% url 'edit_profile' user.pk %}>Change Password!</a></li>
+    {% elif request.path == "login/"%}
+        <li class="float_right"><a href= {% url 'signup' %}>Sign Up</a></li>
+    {% elif request.path == "signup/"%}
+        <li class="float_right"><a href= {% url 'login' %}>Login</a></li>
+    {% else %}
+        <li class="float_right"><a href= {% url 'signup' %}>Sign Up</a></li>
+        <li class="float_right"><a href= {% url 'login' %}>Login</a></li>
+    {% endif %}
+
+    </ul>
+</head>
+<body class="blue_background">
+    
+    {% block content %}
+
+    {% endblock content %}
+    </body>
+</html>
