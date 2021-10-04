@@ -4,15 +4,18 @@ import DropDownMenu from "./DropDownMenu";
 import SearchBar from "./SearchBar";
 import AppButton from "./AppButton";
 import DropDownWithSearch from "./DropDownWithSearch";
-
+import { withRouter } from "react-router";
+import Pagination from "./Pagination";
+import Issue from "./Issue";
 class IssueTab extends Component {
   state = {
     issueList: [],
     searchedList: [],
+    filterBy: "title",
+    emptyList: false,
   };
   constructor() {
     super();
-    console.log("constructor called");
   }
 
   async componentDidMount() {
@@ -20,20 +23,23 @@ class IssueTab extends Component {
     await this.fetchIssues();
   }
   componentDidUpdate(prevProps) {
-    console.log("updated");
     if (
       this.state.issueList !== "undefined" &&
       this.props.issueList !== prevProps.issueList
     ) {
       this.setState({ issueList: this.props.issueList });
     }
-    console.log(this.state.issueList.length);
   }
   render() {
     return (
       <div id="Issues" className="tabcontent">
         <div style={{ marginLeft: "3%", display: "inline-block" }}>
-          <DropDownMenu title="Filter" />
+          <DropDownMenu
+            title="Filter"
+            onClick={this.handleFilter}
+            item1="id"
+            item2="title"
+          />
         </div>
         <div style={{ marginLeft: "2%", display: "inline-block" }}>
           <SearchBar id="mainSearch" onClick={this.handleSearch("title")} />
@@ -67,37 +73,75 @@ class IssueTab extends Component {
           />
         </div>
         <div style={{ marginLeft: "3%", display: "inline-block" }}>
-          <DropDownMenu title="Labels" />
+          <DropDownMenu
+            title="Labels"
+            item1="Item1"
+            item2="Item2"
+            item3="Item3"
+          />
         </div>
         <div style={{ marginLeft: "3%", display: "inline-block" }}>
-          <DropDownMenu title="Projects" />
+          <DropDownMenu
+            title="Projects"
+            item1="Item1"
+            item2="Item2"
+            item3="Item3"
+          />
         </div>
         <div style={{ marginLeft: "3%", display: "inline-block" }}>
-          <DropDownMenu title="Milestones" />
+          <DropDownMenu
+            title="Milestones"
+            item1="Item1"
+            item2="Item2"
+            item3="Item3"
+          />
         </div>
-
-        <IssueList issueList={this.state.searchedList} />
+        {this.state.emptyList ? (
+          <h3>No issue available</h3>
+        ) : (
+          <Pagination
+            data={this.state.searchedList}
+            RenderComponent={Issue}
+            title="Issues"
+            pageLimit={1}
+            dataLimit={10}
+          />
+        )}
       </div>
     );
   }
+
+  handleFilter = (filterBy) => {
+    this.setState({ filterBy: filterBy });
+  };
 
   showAlert = () => {
     alert("Button not implemented");
   };
 
   handleSearch = (searchBy) => (searchString) => {
-    console.log("search:" + searchBy);
+    if (searchBy !== "createdBy") searchBy = this.state.filterBy;
     if (this.state.issueList) {
       var searchedList = [];
       for (var issue in this.state.issueList) {
-        if (
-          this.state.issueList[issue][searchBy]
-            .toLowerCase()
-            .includes(searchString.toLowerCase())
-        )
-          searchedList.push(this.state.issueList[issue]);
+        if (searchBy === "id") {
+          if (this.state.issueList[issue][searchBy] === searchString) {
+            searchedList.push(this.state.issueList[issue]);
+          }
+        } else {
+          if (
+            this.state.issueList[issue][searchBy]
+              .toLowerCase()
+              .includes(searchString.toLowerCase())
+          )
+            searchedList.push(this.state.issueList[issue]);
+        }
       }
-      this.setState({ searchedList: searchedList });
+      if (searchedList.length === 0) this.setState({ emptyList: true });
+      else {
+        this.setState({ emptyList: false });
+        this.setState({ searchedList: searchedList });
+      }
     }
     if (searchString === "") {
       this.setState({ searchedList: this.state.issueList });
@@ -105,7 +149,6 @@ class IssueTab extends Component {
   };
 
   fetchIssues = async () => {
-    console.log("running post request");
     const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -114,16 +157,17 @@ class IssueTab extends Component {
       "https://615448672473940017efad57.mockapi.io/issues",
       requestOptions
     ).then((response) => response.json());
-    console.log(response);
     var newIssueList = [];
     response.forEach(function (issue) {
       newIssueList.push(issue);
     });
+    newIssueList.sort((a, b) =>
+      a.createdTime > b.createdTime ? 1 : b.createdTime > a.createdTime ? -1 : 0
+    );
     this.setState({ issueList: newIssueList, searchedList: newIssueList });
-    console.log(this.state.issueList.length);
   };
   handleNewIssue = async () => {
-    console.log("running post request");
+    this.props.history.push(`/newIssue`, {});
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -137,4 +181,4 @@ class IssueTab extends Component {
   };
 }
 
-export default IssueTab;
+export default withRouter(IssueTab);

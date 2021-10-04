@@ -86,7 +86,6 @@ class TabBar extends Component {
   }
 
   handleActivation = (id) => {
-    console.log("eeventt" + id);
     var i, tabcontent, tablinks;
 
     // Get all elements with class="tabcontent" and hide them

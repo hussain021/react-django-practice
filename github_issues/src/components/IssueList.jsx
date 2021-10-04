@@ -5,20 +5,13 @@ class IssueList extends Component {
   state = {
     issueList: this.props.issueList,
   };
-  componentDidMount() {
-    console.log("createddddd");
-    //this.setState({issueList:this.props.issueList})
-    console.log(this.state.issueList.length);
-  }
   componentDidUpdate(prevProps) {
-    console.log("updated");
     if (
       this.state.issueList !== "undefined" &&
       this.props.issueList !== prevProps.issueList
     ) {
       this.setState({ issueList: this.props.issueList });
     }
-    console.log(this.state.issueList.length);
   }
 
   render() {
@@ -37,6 +30,8 @@ class IssueList extends Component {
                     createdTime={issue.createdTime}
                     isBugReported={issue.isBugReported}
                     needsTriage={issue.needsTriage}
+                    hasMessage={issue.hasMessage}
+                    message={issue.message}
                   />
                 </td>
               </tr>

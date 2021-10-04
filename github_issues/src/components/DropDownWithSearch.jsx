@@ -24,7 +24,6 @@ class DropDownWithSearch extends Component {
     );
   }
   handleSearch = (searchString) => {
-    console.log("search:" + searchString);
     this.state.onClick(searchString);
   };
 }
