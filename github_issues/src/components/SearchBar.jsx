@@ -25,7 +25,7 @@ class SearchBar extends Component {
         <input
           id={this.state.id}
           type="text"
-          placeholder="Search.."
+          placeholder={this.state.id}
           name="search"
         />
       </React.Fragment>
