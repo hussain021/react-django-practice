@@ -7,27 +7,27 @@ class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{ background: "black", height: "70px" }}>
-          <div style={{ display: "inline-block" }}>
+        <div className="black70">
+          <div className="inlineBlock">
             <Icon
               className="position-absolute top-0 end-0"
               width="30px"
-              path="./bars-solid.svg"
+              iconPath="./bars-solid.svg"
             />
           </div>
 
-          <div style={{ marginLeft: "45%", display: "inline-block" }}>
+          <div className="marginLeft45">
             <Icon
               className="position-absolute top-0 end-0"
               width="30px"
-              path="./github-brands.svg"
+              iconPath="./github-brands.svg"
             />
           </div>
-          <div style={{ marginLeft: "48%", display: "inline-block" }}>
+          <div className="marginLeft45">
             <Icon
               className="invert_effect position-absolute top-0 end-0"
               width="30px"
-              path="./bell-solid.svg"
+              iconPath="./bell-solid.svg"
             />
           </div>
         </div>

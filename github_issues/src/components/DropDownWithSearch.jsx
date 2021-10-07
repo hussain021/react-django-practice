@@ -4,27 +4,35 @@ import SearchBar from "./SearchBar";
 class DropDownWithSearch extends Component {
   state = {
     title: this.props.title,
+    items: this.props.items,
     onClick: this.props.onClick,
   };
   render() {
     return (
-      <div className="dropdown">
-        <div className="trigger">
-          {this.state.title}
-          <div className="subAuthor">
-            <div className="item" style={{ width: "200px" }}>
-              {" "}
-              <div style={{ marginLeft: "2%", display: "inline-block" }}>
-                <SearchBar id="author" onClick={this.handleSearch} />
+      <React.Fragment>
+        <div className="dropdown">
+          <div className="trigger">
+            {this.state.title}
+            <div className="subAuthor">
+              <div className="item" style={{ width: "200px" }}>
+                {" "}
+                {this.state.items.map((item, index) => (
+                  <div key={index} className="searchBarSpacing">
+                    <SearchBar
+                      id={item}
+                      onClick={this.handleSearch(this.state.onClick[index])}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
-  handleSearch = (searchString) => {
-    this.state.onClick(searchString);
+  handleSearch = (onClick) => (searchString) => {
+    onClick(searchString);
   };
 }
 

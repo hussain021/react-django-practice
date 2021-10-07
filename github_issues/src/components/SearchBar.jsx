@@ -7,14 +7,14 @@ class SearchBar extends Component {
   };
   render() {
     return (
-      <div>
+      <React.Fragment>
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
 
         <button
-          style={{ width: "40px", height: "30px" }}
+          className="width30Height40"
           onClick={() =>
             this.state.onClick(document.getElementById(this.state.id).value)
           }
@@ -27,7 +27,7 @@ class SearchBar extends Component {
           placeholder="Search.."
           name="search"
         />
-      </div>
+      </React.Fragment>
     );
   }
 }

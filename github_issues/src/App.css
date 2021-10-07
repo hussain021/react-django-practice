@@ -251,3 +251,49 @@ user agent stylesheet div {
   box-shadow: none;
   color: #999;
 }
+.searchBarSpacing {
+  margin-left: 2%;
+  display: inline-block;
+}
+.marginLeft30 {
+  margin-left: 30%;
+  display: inline-block;
+}
+.marginLeft5 {
+  margin-left: 5%;
+  display: inline-block;
+}
+.marginLeft3 {
+  margin-left: 3%;
+  display: inline-block;
+}
+.marginLeft2 {
+  margin-left: 2%;
+  display: inline-block;
+}
+.marginLeft45 {
+  margin-left: 45%;
+  display: inline-block;
+}
+.marginLeft48 {
+  margin-left: 48%;
+  display: inline-block;
+}
+.paddingRight {
+  padding-right: 10%;
+  display: inline-block;
+}
+.inlineBlock {
+  display: inline-block;
+}
+.width90 {
+  width: 90%;
+}
+.black70 {
+  background: black;
+  height: 70px;
+}
+.width30Height40 {
+  width: 40px;
+  height: 30px;
+}

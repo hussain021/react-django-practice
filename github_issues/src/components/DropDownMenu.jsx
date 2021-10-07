@@ -3,9 +3,7 @@ import React, { Component } from "react";
 class DropDownMenu extends Component {
   state = {
     title: this.props.title,
-    item1: this.props.item1,
-    item2: this.props.item2,
-    item3: this.props.item3,
+    items: [this.props.item1, this.props.item2, this.props.item3],
     onClick: this.props.onClick,
   };
   render() {
@@ -15,19 +13,11 @@ class DropDownMenu extends Component {
           {this.state.title}
           <div className="sub">
             <div className="item">
-              <button onClick={() => this.state.onClick(this.state.item1)}>
-                {this.state.item1}
-              </button>
-            </div>
-            <div className="item">
-              <button onClick={() => this.state.onClick(this.state.item2)}>
-                {this.state.item2}
-              </button>
-            </div>
-            <div className="item">
-              <button onClick={() => this.state.onClick(this.state.item3)}>
-                {this.state.item3}
-              </button>
+              {this.state.items.map((item, index) => (
+                <div key={index} className="item">
+                  {item}
+                </div>
+              ))}
             </div>
           </div>
         </div>

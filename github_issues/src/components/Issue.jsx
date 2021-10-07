@@ -25,20 +25,26 @@ const Issue = ({
     });
   };
   return (
-    <div onClick={handleOnClick}>
-      <h3>
-        {title}
-        {title}
-      </h3>
-      <h5 style={{ color: "grey" }}>
-        #{id} {isOpen ? "opened" : "closed"} {createdTime} by {createdBy}
-        {hasMessage ? (
-          <Icon path="./message-solid.svg" width="20px" />
-        ) : (
-          <div></div>
-        )}
-      </h5>
-    </div>
+    <React.Fragment>
+      <div onClick={handleOnClick}>
+        <h3>
+          {title}
+          {title}
+        </h3>
+        <div className="width90">
+          <h5>
+            #{id} {isOpen ? "opened" : "closed"} {createdTime} by {createdBy}
+            {hasMessage ? (
+              <div style={{ display: "inline-block", paddingLeft: "55%" }}>
+                <Icon iconPath="./message-solid.svg" width="20px" />
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </h5>
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 

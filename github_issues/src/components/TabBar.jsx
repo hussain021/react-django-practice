@@ -6,54 +6,54 @@ import IssueTab from "./IssueTab";
 class TabBar extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <AppButton
           id="Code"
           onClick={this.handleActivation}
           text="Code"
-          design="border p-4"
+          buttonStyle="border p-4"
           width="20px"
-          path="code-solid.svg"
+          iconPath="code-solid.svg"
         ></AppButton>
         <AppButton
           id="Issues"
           onClick={this.handleActivation}
           text="Issues"
-          design="border p-4"
+          buttonStyle="border p-4"
           width="20px"
-          path="circle-exclamation-solid.svg"
+          iconPath="circle-exclamation-solid.svg"
         ></AppButton>
         <AppButton
           id="PullRequests"
           onClick={this.handleActivation}
           text="PullRequests"
-          design="border p-4"
+          buttonStyle="border p-4"
           width="20px"
-          path="code-pull-request-solid.svg"
+          iconPath="code-pull-request-solid.svg"
         ></AppButton>
         <AppButton
           id="Discussions"
           onClick={this.handleActivation}
           text="Discussions"
-          design="border p-4"
+          buttonStyle="border p-4"
           width="20px"
-          path="comments-solid.svg"
+          iconPath="comments-solid.svg"
         ></AppButton>
         <AppButton
           id="Actions"
           onClick={this.handleActivation}
           text="Actions"
-          design="border p-4"
+          buttonStyle="border p-4"
           width="20px"
-          path="circle-play-solid.svg"
+          iconPath="circle-play-solid.svg"
         ></AppButton>
         <AppButton
           id="Projects"
           onClick={this.handleActivation}
           text="Projects"
-          design="border p-4"
+          buttonStyle="border p-4"
           width="20px"
-          path="bars-solid.svg"
+          iconPath="bars-solid.svg"
         ></AppButton>
         <div id="Code" className="tabcontent">
           <h3>Code</h3>
@@ -81,7 +81,7 @@ class TabBar extends Component {
           <h3>Projects</h3>
           <p>No Projects</p>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import IssueList from "./IssueList";
 import DropDownMenu from "./DropDownMenu";
 import SearchBar from "./SearchBar";
 import AppButton from "./AppButton";
@@ -13,15 +12,14 @@ class IssueTab extends Component {
     searchedList: [],
     filterBy: "title",
     emptyList: false,
+    currentPage: 1,
   };
-  constructor() {
-    super();
-  }
 
   async componentDidMount() {
     // Simple POST request with a JSON body using fetch
     await this.fetchIssues();
   }
+
   componentDidUpdate(prevProps) {
     if (
       this.state.issueList !== "undefined" &&
@@ -30,84 +28,103 @@ class IssueTab extends Component {
       this.setState({ issueList: this.props.issueList });
     }
   }
+
   render() {
     return (
-      <div id="Issues" className="tabcontent">
-        <div style={{ marginLeft: "3%", display: "inline-block" }}>
-          <DropDownMenu
-            title="Filter"
-            onClick={this.handleFilter}
-            item1="id"
-            item2="title"
-          />
+      <React.Fragment>
+        <div id="Issues" className="tabcontent">
+          <div className="marginLeft3">
+            <DropDownWithSearch
+              title="Filter"
+              onClick={[this.handleSearch("id"), this.handleSearch("title")]}
+              items={["id", "title"]}
+            />
+          </div>
+          <div className="marginLeft2">
+            <AppButton
+              onClick={this.showAlert}
+              text="Labels"
+              iconPath="./tag-solid.svg"
+              width="30px"
+            />
+          </div>
+          <div className="inlineBlock">
+            <AppButton
+              onClick={this.showAlert}
+              text="MileStones"
+              iconPath="./arrow-right-solid.svg"
+              width="30px"
+            />
+          </div>
+          <div className="marginLeft2">
+            <AppButton onClick={this.handleNewIssue} text="New Issue" />
+          </div>
+          <hr />
+          <br />
+          <br />
+          <br />
+          <div className="marginLeft3">
+            <DropDownWithSearch
+              title="Author"
+              onClick={[this.handleSearch("createdBy")]}
+              items={["Author"]}
+            />
+          </div>
+          <div className="marginLeft3">
+            <DropDownMenu
+              title="Labels"
+              item1="Item1"
+              item2="Item2"
+              item3="Item3"
+            />
+          </div>
+          <div className="marginLeft3">
+            <DropDownMenu
+              title="Projects"
+              item1="Item1"
+              item2="Item2"
+              item3="Item3"
+            />
+          </div>
+          <div className="marginLeft3">
+            <DropDownMenu
+              title="Milestones"
+              item1="Item1"
+              item2="Item2"
+              item3="Item3"
+            />
+          </div>
+          {this.state.emptyList ? (
+            <h3>No issue available</h3>
+          ) : (
+            <React.Fragment>
+              <h1>Issues</h1>
+
+              <div className="dataContainer">
+                {this.getPaginatedData().map((d, idx) => (
+                  <Issue
+                    key={idx}
+                    title={d.title}
+                    id={d.id}
+                    isOpen={d.isOpen}
+                    createdTime={d.createdTime}
+                    createdBy={d.createdBy}
+                    hasMessage={d.hasMessage}
+                    message={d.message}
+                  />
+                ))}
+              </div>
+              <Pagination
+                data={this.state.searchedList}
+                title="Issues"
+                pageLimit={1}
+                dataLimit={10}
+                onClick={this.handlePagination}
+              />
+            </React.Fragment>
+          )}
         </div>
-        <div style={{ marginLeft: "2%", display: "inline-block" }}>
-          <SearchBar id="mainSearch" onClick={this.handleSearch("title")} />
-        </div>
-        <div style={{ marginLeft: "2%", display: "inline-block" }}>
-          <AppButton
-            onClick={this.showAlert}
-            text="Labels"
-            path="./tag-solid.svg"
-            width="30px"
-          />
-        </div>
-        <div style={{ display: "inline-block" }}>
-          <AppButton
-            onClick={this.showAlert}
-            text="MileStones"
-            path="./arrow-right-solid.svg"
-            width="30px"
-          />
-        </div>
-        <div
-          style={{ marginLeft: "2%", display: "inline-block", color: "green" }}
-        >
-          <AppButton onClick={this.handleNewIssue} text="New Issue" />
-        </div>
-        <hr />
-        <div style={{ marginLeft: "3%", display: "inline-block" }}>
-          <DropDownWithSearch
-            onClick={this.handleSearch("createdBy")}
-            title="Author"
-          />
-        </div>
-        <div style={{ marginLeft: "3%", display: "inline-block" }}>
-          <DropDownMenu
-            title="Labels"
-            item1="Item1"
-            item2="Item2"
-            item3="Item3"
-          />
-        </div>
-        <div style={{ marginLeft: "3%", display: "inline-block" }}>
-          <DropDownMenu
-            title="Projects"
-            item1="Item1"
-            item2="Item2"
-            item3="Item3"
-          />
-        </div>
-        <div style={{ marginLeft: "3%", display: "inline-block" }}>
-          <DropDownMenu
-            title="Milestones"
-            item1="Item1"
-            item2="Item2"
-            item3="Item3"
-          />
-        </div>
-        {this.state.emptyList ? (
-          <h3>No issue available</h3>
-        ) : (
-          <Pagination
-            data={this.state.searchedList}
-            RenderComponent={Issue}
-            title="Issues"
-            pageLimit={1}
-            dataLimit={10}
-          />
-        )}
-      </div>
+      </React.Fragment>
     );
   }
 
@@ -118,9 +135,21 @@ class IssueTab extends Component {
   showAlert = () => {
     alert("Button not implemented");
   };
-
+  handlePagination = (currentPage) => {
+    this.setState({ currentPage: currentPage });
+  };
+  getPaginationGroup = () => {
+    let start = Math.floor((this.state.currentPage - 1) / 1) * 1;
+    return new Array(1).fill().map((_, idx) => start + idx + 1);
+  };
+  getPaginatedData = () => {
+    const startIndex = this.state.currentPage * 10 - 10;
+    const endIndex = startIndex + 10;
+    return this.state.searchedList.slice(startIndex, endIndex);
+  };
   handleSearch = (searchBy) => (searchString) => {
-    if (searchBy !== "createdBy") searchBy = this.state.filterBy;
+    console.log(searchBy + searchString);
+    //if (searchBy !== "createdBy") searchBy = this.state.filterBy;
     if (this.state.issueList) {
       var searchedList = [];
       for (var issue in this.state.issueList) {

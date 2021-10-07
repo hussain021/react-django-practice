@@ -3,7 +3,7 @@ import AppButton from "./AppButton";
 
 class ButtonWithCount extends Component {
   state = {
-    path: this.props.path,
+    iconPath: this.props.iconPath,
     width: this.props.width,
     count: this.props.count,
     name: this.props.name,
@@ -11,18 +11,21 @@ class ButtonWithCount extends Component {
   };
   render() {
     return (
-      <div className="m-2">
-        <div className="btn-group" role="group">
+      <React.Fragment>
+        <div className="btn-group m-2" role="group">
           <AppButton
-            design="btn btn-light border-right"
+            buttonStyle="btn btn-light border-right"
             onClick={() => this.state.onClick(this.state.name)}
-            path={this.state.path}
+            iconPath={this.state.iconPath}
             width={this.state.width}
             text={this.state.name}
           />
-          <AppButton design="btn btn-light border" text={this.state.count} />
+          <AppButton
+            buttonStyle="btn btn-light border"
+            text={this.state.count}
+          />
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
