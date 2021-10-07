@@ -10,22 +10,18 @@ class DropDownWithSearch extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="dropdown">
-          <div className="trigger">
-            {this.state.title}
-            <div className="subAuthor">
-              <div className="item" style={{ width: "200px" }}>
-                {" "}
-                {this.state.items.map((item, index) => (
-                  <div key={index} className="searchBarSpacing">
-                    <SearchBar
-                      id={item}
-                      onClick={this.handleSearch(this.state.onClick[index])}
-                    />
-                  </div>
-                ))}
+        <div className="dropdown trigger">
+          {this.state.title}
+          <div className="item subAuthor" style={{ width: "200px" }}>
+            {" "}
+            {this.state.items.map((item, index) => (
+              <div key={index} className="searchBarSpacing">
+                <SearchBar
+                  id={item}
+                  onClick={this.handleSearch(this.state.onClick[index])}
+                />
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </React.Fragment>

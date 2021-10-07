@@ -8,18 +8,14 @@ class DropDownMenu extends Component {
   };
   render() {
     return (
-      <div className="dropdown">
-        <div className="trigger">
-          {this.state.title}
-          <div className="sub">
-            <div className="item">
-              {this.state.items.map((item, index) => (
-                <div key={index} className="item">
-                  {item}
-                </div>
-              ))}
+      <div className="dropdown trigger">
+        {this.state.title}
+        <div className="sub item">
+          {this.state.items.map((item, index) => (
+            <div key={index} className="item">
+              {item}
             </div>
-          </div>
+          ))}
         </div>
       </div>
     );

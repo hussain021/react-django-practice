@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Icon from "./Icon";
+import { Button } from "react-bootstrap";
 
 class AppButton extends Component {
   state = {
@@ -11,13 +12,14 @@ class AppButton extends Component {
   };
   render() {
     return (
-      <button
+      <Button
+        variant="success"
         onClick={() => this.state.onClick(this.state.text)}
         className={this.state.buttonStyle}
       >
         <Icon iconPath={this.state.iconPath} width={this.state.width} />
         &nbsp;{this.state.text}
-      </button>
+      </Button>
     );
   }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AppButton from "./AppButton";
 
 class SearchBar extends Component {
   state = {
@@ -13,14 +14,14 @@ class SearchBar extends Component {
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
 
-        <button
+        <AppButton
           className="width30Height40"
           onClick={() =>
             this.state.onClick(document.getElementById(this.state.id).value)
           }
-        >
-          <i className="fa fa-search"></i>
-        </button>
+          iconPath="./magnifying-glass-solid.svg"
+          width="20px"
+        />
         <input
           id={this.state.id}
           type="text"

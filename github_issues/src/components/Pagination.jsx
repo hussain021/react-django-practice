@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import AppButton from "./AppButton";
 
 export default function Pagination({ data, dataLimit, onClick }) {
   const [pages, setPages] = useState(Math.round(data.length / dataLimit));
@@ -21,19 +22,17 @@ export default function Pagination({ data, dataLimit, onClick }) {
   return (
     <React.Fragment>
       <div className="pagination">
-        <button
+        <AppButton
           onClick={goToPreviousPage}
           className={`prev ${currentPage === 1 ? "disabled" : ""}`}
-        >
-          prev
-        </button>
+          text="prev"
+        />
 
-        <button
+        <AppButton
           onClick={goToNextPage}
           className={`next ${currentPage === pages ? "disabled" : ""}`}
-        >
-          next
-        </button>
+          text="next"
+        />
       </div>
     </React.Fragment>
   );

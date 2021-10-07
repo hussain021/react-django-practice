@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import DropDownMenu from "./DropDownMenu";
-import SearchBar from "./SearchBar";
 import AppButton from "./AppButton";
 import DropDownWithSearch from "./DropDownWithSearch";
 import { withRouter } from "react-router";
 import Pagination from "./Pagination";
 import Issue from "./Issue";
+
 class IssueTab extends Component {
   state = {
     issueList: [],

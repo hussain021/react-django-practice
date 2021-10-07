@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Img } from "react-image";
 
 class Icon extends Component {
   state = {
@@ -6,7 +7,7 @@ class Icon extends Component {
     width: this.props.width,
   };
   render() {
-    return <img src={this.state.iconPath} alt="" width={this.state.width} />;
+    return <Img src={this.state.iconPath} alt="" width={this.state.width} />;
   }
 }
 
