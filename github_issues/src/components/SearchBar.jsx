@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AppButton from "./AppButton";
+import TextField from "@mui/material/TextField";
 
 class SearchBar extends Component {
   state = {
@@ -15,18 +16,19 @@ class SearchBar extends Component {
         />
 
         <AppButton
-          className="width30Height40"
+          className="searchBarStyle"
           onClick={() =>
             this.state.onClick(document.getElementById(this.state.id).value)
           }
           iconPath="./magnifying-glass-solid.svg"
           width="20px"
         />
-        <input
+        <TextField
           id={this.state.id}
-          type="text"
+          label={this.state.id}
+          variant="outlined"
           placeholder={this.state.id}
-          name="search"
+          className="searchStyle"
         />
       </React.Fragment>
     );

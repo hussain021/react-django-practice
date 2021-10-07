@@ -5,6 +5,7 @@ import DropDownWithSearch from "./DropDownWithSearch";
 import { withRouter } from "react-router";
 import Pagination from "./Pagination";
 import Issue from "./Issue";
+import SearchBar from "./SearchBar";
 
 class IssueTab extends Component {
   state = {
@@ -32,15 +33,20 @@ class IssueTab extends Component {
   render() {
     return (
       <React.Fragment>
+        <br />
+        <br />
+
         <div id="Issues" className="tabcontent">
-          <div className="marginLeft3">
+          <div className="dropDownMenu">
             <DropDownWithSearch
               title="Filter"
-              onClick={[this.handleSearch("id"), this.handleSearch("title")]}
-              items={["id", "title"]}
+              onClick={this.handleFilter}
+              items={["id", "title", "author"]}
+              selected="title"
             />
           </div>
-          <div className="marginLeft2">
+          <SearchBar id="mainSearch" onClick={this.handleSearch("title")} />
+          <div className="issueTabMargin">
             <AppButton
               onClick={this.showAlert}
               text="Labels"
@@ -56,42 +62,26 @@ class IssueTab extends Component {
               width="30px"
             />
           </div>
-          <div className="marginLeft2">
+          <div className="issueTabMargin">
             <AppButton onClick={this.handleNewIssue} text="New Issue" />
           </div>
           <hr />
           <br />
           <br />
           <br />
-          <div className="marginLeft3">
-            <DropDownWithSearch
-              title="Author"
-              onClick={[this.handleSearch("createdBy")]}
-              items={["Author"]}
-            />
+          <div className="dropDownMenu">
+            <DropDownMenu title="Labels" items={["Item1", "Item2", "Item3"]} />
           </div>
-          <div className="marginLeft3">
-            <DropDownMenu
-              title="Labels"
-              item1="Item1"
-              item2="Item2"
-              item3="Item3"
-            />
-          </div>
-          <div className="marginLeft3">
+          <div className="dropDownMenu">
             <DropDownMenu
               title="Projects"
-              item1="Item1"
-              item2="Item2"
-              item3="Item3"
+              items={["Item1", "Item2", "Item3"]}
             />
           </div>
-          <div className="marginLeft3">
+          <div className="dropDownMenu">
             <DropDownMenu
               title="Milestones"
-              item1="Item1"
-              item2="Item2"
-              item3="Item3"
+              items={["Item1", "Item2", "Item3"]}
             />
           </div>
           {this.state.emptyList ? (
@@ -147,9 +137,14 @@ class IssueTab extends Component {
     const endIndex = startIndex + 10;
     return this.state.searchedList.slice(startIndex, endIndex);
   };
+  handleFilter = (filterBy) => {
+    this.setState({ filterBy: filterBy });
+  };
+
   handleSearch = (searchBy) => (searchString) => {
     console.log(searchBy + searchString);
-    //if (searchBy !== "createdBy") searchBy = this.state.filterBy;
+    if (searchBy !== "createdBy") searchBy = this.state.filterBy;
+    if (searchBy === "author") searchBy = "createdBy";
     if (this.state.issueList) {
       var searchedList = [];
       for (var issue in this.state.issueList) {

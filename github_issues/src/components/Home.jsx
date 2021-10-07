@@ -20,10 +20,10 @@ class Home extends Component {
     return (
       <React.Fragment>
         <NavBar />
-        <div className="marginLeft5">
+        <div className="buttonCountMargin">
           <Title title="facebook" subTitle="create-react-app" />
         </div>
-        <div className="marginLeft30">
+        <div className="firstButtonCount">
           <ButtonWithCount
             key={this.state.watch["value"] ? watch : unwatch}
             onClick={this.handleToggle("watch")}
@@ -33,7 +33,7 @@ class Home extends Component {
             width="20px"
           />
         </div>
-        <div className="marginLeft5">
+        <div className="buttonCountMargin">
           <ButtonWithCount
             key={this.state.star["value"] ? star : unstar}
             onClick={this.handleToggle("star")}
@@ -43,7 +43,7 @@ class Home extends Component {
             width="20px"
           />
         </div>
-        <div className="marginLeft5">
+        <div className="buttonCountMargin">
           <ButtonWithCount
             key={this.state.fork["value"] ? fork : unfork}
             onClick={this.handleToggle("fork")}

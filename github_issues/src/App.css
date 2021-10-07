@@ -75,11 +75,13 @@
 /* Dropdown Button */
 .trigger {
   box-sizing: border-box;
+  border: 1px solid black;
   position: relative;
   width: 120px;
   margin: 0 0 50px;
   padding: 10px;
-  background: #bada55;
+  background: lightgreen;
+  border-radius: 5%;
   text-align: center;
 }
 
@@ -255,45 +257,50 @@ user agent stylesheet div {
   margin-left: 2%;
   display: inline-block;
 }
-.marginLeft30 {
+.firstButtonCount {
   margin-left: 30%;
   display: inline-block;
 }
-.marginLeft5 {
+.buttonCountMargin {
   margin-left: 5%;
   display: inline-block;
 }
-.marginLeft3 {
+.dropDownMenu {
   margin-left: 3%;
   display: inline-block;
 }
-.marginLeft2 {
+.issueTabMargin {
   margin-left: 2%;
   display: inline-block;
 }
-.marginLeft45 {
+.navBarIconStyle {
   margin-left: 45%;
-  display: inline-block;
-}
-.marginLeft48 {
-  margin-left: 48%;
-  display: inline-block;
-}
-.paddingRight {
-  padding-right: 10%;
   display: inline-block;
 }
 .inlineBlock {
   display: inline-block;
 }
-.width90 {
+.issueStyle {
   width: 90%;
 }
-.black70 {
+.navBarBackground {
   background: black;
   height: 70px;
 }
-.width30Height40 {
+.menuStyle {
+  border: 1px solid black;
+  border-radius: 5%;
+  background-color: lightgreen;
+  width: 100px;
+}
+.searchBarStyle {
   width: 40px;
   height: 30px;
+}
+.searchStyle {
+  background-color: whitesmoke;
+}
+.issueMessageStyle {
+  display: inline-block;
+  padding-left: 55%;
 }

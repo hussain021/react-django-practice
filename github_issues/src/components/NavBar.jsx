@@ -7,7 +7,7 @@ class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="black70">
+        <div className="navBarBackground">
           <div className="inlineBlock">
             <Icon
               className="position-absolute top-0 end-0"
@@ -16,14 +16,14 @@ class NavBar extends Component {
             />
           </div>
 
-          <div className="marginLeft45">
+          <div className="navBarIconStyle">
             <Icon
               className="position-absolute top-0 end-0"
               width="30px"
               iconPath="./github-brands.svg"
             />
           </div>
-          <div className="marginLeft45">
+          <div className="navBarIconStyle">
             <Icon
               className="invert_effect position-absolute top-0 end-0"
               width="30px"

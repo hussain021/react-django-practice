@@ -31,11 +31,11 @@ const Issue = ({
           {title}
           {title}
         </h3>
-        <div className="width90">
+        <div className="issueStyle">
           <h5>
             #{id} {isOpen ? "opened" : "closed"} {createdTime} by {createdBy}
             {hasMessage ? (
-              <div style={{ display: "inline-block", paddingLeft: "55%" }}>
+              <div className="issueMessageStyle">
                 <Icon iconPath="./message-solid.svg" width="20px" />
               </div>
             ) : (
