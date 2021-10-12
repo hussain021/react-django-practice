@@ -13,9 +13,8 @@ class AppButton extends Component {
   render() {
     return (
       <Button
-        variant="success"
         onClick={() => this.state.onClick(this.state.text)}
-        className={this.state.buttonStyle}
+        variant="success"
       >
         <Icon iconPath={this.state.iconPath} width={this.state.width} />
         &nbsp;{this.state.text}

@@ -12,18 +12,15 @@ class ButtonWithCount extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="btn-group m-2" role="group">
+        <div className="btn-group" role="group">
           <AppButton
-            buttonStyle="btn btn-light border-right"
+            m={2}
             onClick={() => this.state.onClick(this.state.name)}
             iconPath={this.state.iconPath}
             width={this.state.width}
             text={this.state.name}
           />
-          <AppButton
-            buttonStyle="btn btn-light border"
-            text={this.state.count}
-          />
+          <AppButton text={this.state.count} />
         </div>
       </React.Fragment>
     );

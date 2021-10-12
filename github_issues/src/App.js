@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import Profile from "./components/Profile";
+import Details from "./components/Details";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import NewIssue from "./components/NewIssue";
@@ -14,7 +14,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/newIssue" component={NewIssue} />
-            <Route path="/:id" component={Profile} />
+            <Route path="/:id" component={Details} />
           </Switch>
         </BrowserRouter>
       </div>

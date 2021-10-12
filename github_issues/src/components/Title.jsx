@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import React, { Component } from "react";
 
 class Title extends Component {
@@ -7,11 +8,11 @@ class Title extends Component {
   };
   render() {
     return (
-      <h3 className="m-4 text-primary">
+      <Typography variant="h5">
         <small>{this.state.title} &nbsp;</small>
         /&nbsp;
         {this.state.subTitle}
-      </h3>
+      </Typography>
     );
   }
 }

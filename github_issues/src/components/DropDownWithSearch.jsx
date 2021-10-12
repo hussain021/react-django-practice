@@ -14,13 +14,9 @@ class DropDownWithSearch extends Component {
   render() {
     return (
       <React.Fragment>
-        <InputLabel id="demo-simple-select-label">
-          {this.state.title}
-        </InputLabel>
+        <InputLabel>{this.state.title}</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          className="menuStyle"
+          autoWidth
           value={this.state.selected}
           onChange={this.handleSearch}
         >

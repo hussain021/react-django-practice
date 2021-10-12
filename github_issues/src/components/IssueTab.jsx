@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import Pagination from "./Pagination";
 import Issue from "./Issue";
 import SearchBar from "./SearchBar";
+import { Typography } from "@mui/material";
 
 class IssueTab extends Component {
   state = {
@@ -36,84 +37,88 @@ class IssueTab extends Component {
         <br />
         <br />
 
-        <div id="Issues" className="tabcontent">
-          <div className="dropDownMenu">
-            <DropDownWithSearch
-              title="Filter"
-              onClick={this.handleFilter}
-              items={["id", "title", "author"]}
-              selected="title"
-            />
-          </div>
-          <SearchBar id="mainSearch" onClick={this.handleSearch("title")} />
-          <div className="issueTabMargin">
-            <AppButton
-              onClick={this.showAlert}
-              text="Labels"
-              iconPath="./tag-solid.svg"
-              width="30px"
-            />
-          </div>
-          <div className="inlineBlock">
-            <AppButton
-              onClick={this.showAlert}
-              text="MileStones"
-              iconPath="./arrow-right-solid.svg"
-              width="30px"
-            />
-          </div>
-          <div className="issueTabMargin">
-            <AppButton onClick={this.handleNewIssue} text="New Issue" />
-          </div>
-          <hr />
-          <br />
-          <br />
-          <br />
-          <div className="dropDownMenu">
-            <DropDownMenu title="Labels" items={["Item1", "Item2", "Item3"]} />
-          </div>
-          <div className="dropDownMenu">
-            <DropDownMenu
-              title="Projects"
-              items={["Item1", "Item2", "Item3"]}
-            />
-          </div>
-          <div className="dropDownMenu">
-            <DropDownMenu
-              title="Milestones"
-              items={["Item1", "Item2", "Item3"]}
-            />
-          </div>
-          {this.state.emptyList ? (
-            <h3>No issue available</h3>
-          ) : (
-            <React.Fragment>
-              <h1>Issues</h1>
-
-              <div className="dataContainer">
-                {this.getPaginatedData().map((d, idx) => (
-                  <Issue
-                    key={idx}
-                    title={d.title}
-                    id={d.id}
-                    isOpen={d.isOpen}
-                    createdTime={d.createdTime}
-                    createdBy={d.createdBy}
-                    hasMessage={d.hasMessage}
-                    message={d.message}
-                  />
-                ))}
-              </div>
-              <Pagination
-                data={this.state.searchedList}
-                title="Issues"
-                pageLimit={1}
-                dataLimit={10}
-                onClick={this.handlePagination}
-              />
-            </React.Fragment>
-          )}
+        <div className="dropDownMenu">
+          <DropDownWithSearch
+            title="Filter"
+            onClick={this.handleFilter}
+            items={["id", "title", "author"]}
+            selected="title"
+          />
         </div>
+        <SearchBar id="mainSearch" onClick={this.handleSearch("title")} />
+        <div className="issueTabMargin">
+          <AppButton
+            onClick={this.showAlert}
+            text="Labels"
+            iconPath="./tag-solid.svg"
+            width="30px"
+          />
+        </div>
+        <div className="inlineBlock">
+          <AppButton
+            onClick={this.showAlert}
+            text="MileStones"
+            iconPath="./arrow-right-solid.svg"
+            width="30px"
+          />
+        </div>
+        <div className="issueTabMargin">
+          <AppButton onClick={this.handleNewIssue} text="New Issue" />
+        </div>
+        <hr />
+        <br />
+        <br />
+        <br />
+        <div className="dropDownMenu">
+          <DropDownMenu
+            title="Labels"
+            selected="Select"
+            items={["Item1", "Item2", "Item3"]}
+          />
+        </div>
+        <div className="dropDownMenu">
+          <DropDownMenu
+            title="Projects"
+            selected="Select"
+            items={["Item1", "Item2", "Item3"]}
+          />
+        </div>
+        <div className="dropDownMenu">
+          <DropDownMenu
+            title="Milestones"
+            items={["Item1", "Item2", "Item3"]}
+            selected="Select"
+          />
+        </div>
+        {this.state.emptyList ? (
+          <Typography variant="h5">No issue available</Typography>
+        ) : (
+          <React.Fragment>
+            <h1>Issues</h1>
+
+            <div className="dataContainer">
+              {this.getPaginatedData().map((d, idx) => (
+                <Issue
+                  key={idx}
+                  title={d.title}
+                  id={d.id}
+                  isOpen={d.isOpen}
+                  createdTime={d.createdTime}
+                  createdBy={d.createdBy}
+                  hasMessage={d.hasMessage}
+                  message={d.message}
+                />
+              ))}
+            </div>
+            <Pagination
+              data={this.state.searchedList}
+              title="Issues"
+              pageLimit={1}
+              dataLimit={10}
+              onClick={this.handlePagination}
+            />
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }

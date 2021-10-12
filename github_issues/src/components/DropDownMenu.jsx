@@ -6,26 +6,29 @@ class DropDownMenu extends Component {
   state = {
     title: this.props.title,
     items: this.props.items,
-    onClick: this.props.onClick,
+    selected: this.props.title,
   };
   render() {
     return (
       <React.Fragment>
-        <InputLabel id="demo-simple-select-label">
-          {this.state.title}
-        </InputLabel>
+        <InputLabel>{this.state.title}</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          className="menuStyle"
+          autoWidth
+          value={this.state.selected}
+          onChange={this.handleSearch}
         >
           {this.state.items.map((item, index) => (
-            <MenuItem key={index}>{item}</MenuItem>
+            <MenuItem value={item} key={index}>
+              {item}
+            </MenuItem>
           ))}
         </Select>
       </React.Fragment>
     );
   }
+  handleSearch = (event) => {
+    this.setState({ selected: event.target.value });
+  };
 }
 
 export default DropDownMenu;

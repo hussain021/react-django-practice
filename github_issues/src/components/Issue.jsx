@@ -2,6 +2,8 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { withRouter } from "react-router-dom";
 import Icon from "./Icon";
+import Typography from "@mui/material/Typography";
+import { Box } from "@mui/system";
 
 const Issue = ({
   title,
@@ -27,22 +29,24 @@ const Issue = ({
   return (
     <React.Fragment>
       <div onClick={handleOnClick}>
-        <h3>
-          {title}
-          {title}
-        </h3>
-        <div className="issueStyle">
-          <h5>
-            #{id} {isOpen ? "opened" : "closed"} {createdTime} by {createdBy}
-            {hasMessage ? (
-              <div className="issueMessageStyle">
-                <Icon iconPath="./message-solid.svg" width="20px" />
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </h5>
-        </div>
+        <Box>
+          <Typography variant="h5">
+            {title}
+            {title}
+          </Typography>
+          <div className="issueStyle">
+            <Typography variant="h8">
+              #{id} {isOpen ? "opened" : "closed"} {createdTime} by {createdBy}
+              {hasMessage ? (
+                <div className="issueMessageStyle">
+                  <Icon p={5} iconPath="./message-solid.svg" width="20px" />
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </Typography>
+          </div>
+        </Box>
       </div>
     </React.Fragment>
   );

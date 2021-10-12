@@ -1,108 +1,51 @@
 import React, { Component } from "react";
-import AppButton from "./AppButton";
 import "bootstrap/dist/css/bootstrap.css";
 import IssueTab from "./IssueTab";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import { TabList } from "@material-ui/lab";
+import { TabPanel } from "@material-ui/lab";
+import { TabContext } from "@material-ui/lab";
 
 class TabBar extends Component {
+  state = {
+    value: "1",
+  };
+  handleChange = (event, newValue) => {
+    console.log(newValue);
+    this.setState({ value: newValue });
+  };
   render() {
     return (
       <React.Fragment>
-        <AppButton
-          id="Code"
-          onClick={this.handleActivation}
-          text="Code"
-          buttonStyle="border p-4"
-          width="20px"
-          iconPath="code-solid.svg"
-        ></AppButton>
-        <AppButton
-          id="Issues"
-          onClick={this.handleActivation}
-          text="Issues"
-          buttonStyle="border p-4"
-          width="20px"
-          iconPath="circle-exclamation-solid.svg"
-        ></AppButton>
-        <AppButton
-          id="PullRequests"
-          onClick={this.handleActivation}
-          text="PullRequests"
-          buttonStyle="border p-4"
-          width="20px"
-          iconPath="code-pull-request-solid.svg"
-        ></AppButton>
-        <AppButton
-          id="Discussions"
-          onClick={this.handleActivation}
-          text="Discussions"
-          buttonStyle="border p-4"
-          width="20px"
-          iconPath="comments-solid.svg"
-        ></AppButton>
-        <AppButton
-          id="Actions"
-          onClick={this.handleActivation}
-          text="Actions"
-          buttonStyle="border p-4"
-          width="20px"
-          iconPath="circle-play-solid.svg"
-        ></AppButton>
-        <AppButton
-          id="Projects"
-          onClick={this.handleActivation}
-          text="Projects"
-          buttonStyle="border p-4"
-          width="20px"
-          iconPath="bars-solid.svg"
-        ></AppButton>
-        <div id="Code" className="tabcontent">
-          <h3>Code</h3>
-          <p>Code snippet not available!</p>
-        </div>
-
-        <IssueTab id="Issues" className="tabcontent" />
-
-        <div id="PullRequests" className="tabcontent">
-          <h3>Pull Requests</h3>
-          <p>No pull requests</p>
-        </div>
-
-        <div id="Discussions" className="tabcontent">
-          <h3>Discussions</h3>
-          <p>No Discussions</p>
-        </div>
-
-        <div id="Actions" className="tabcontent">
-          <h3>Actions</h3>
-          <p>No Actions</p>
-        </div>
-
-        <div id="Projects" className="tabcontent">
-          <h3>Projects</h3>
-          <p>No Projects</p>
-        </div>
+        <Box sx={{ width: "100%", typography: "body1" }}>
+          <TabContext value={this.state.value}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList
+                onChange={this.handleChange}
+                aria-label="lab API tabs example"
+              >
+                <Tab label="Code" value="1" />
+                <Tab label="Issues" value="2" />
+                <Tab label="Pull Requests" value="3" />
+                <Tab label="Discussions" value="4" />
+                <Tab label="Actions" value="5" />
+                <Tab label="Projects" value="6" />
+              </TabList>
+            </Box>
+            <TabPanel value="1">Code</TabPanel>
+            <TabPanel value="2">
+              <IssueTab />
+            </TabPanel>
+            <TabPanel value="3">Pull Requests</TabPanel>
+            <TabPanel value="4">Discussions</TabPanel>
+            <TabPanel value="5">Actions</TabPanel>
+            <TabPanel value="6">Projects</TabPanel>
+          </TabContext>
+        </Box>
       </React.Fragment>
     );
   }
-
-  handleActivation = (id) => {
-    var i, tabcontent, tablinks;
-
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(id).style.display = "block";
-    document.getElementById(id).className += " active";
-  };
 }
 
 export default TabBar;
