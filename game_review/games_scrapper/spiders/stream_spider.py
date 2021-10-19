@@ -1,14 +1,13 @@
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
-
-from games_scrapper.items import GameItem
+import scrapy
+from games_scrapper.items import GameItem, ReviewItem
 
 
 class StreamSpider(CrawlSpider):
     name = "spider"
     allowed_domains = ["store.steampowered.com"]
     start_urls = ["https://store.steampowered.com/"]
-    base_url = "https://store.steampowered.com/"
     rules = [
         Rule(
             LinkExtractor(
@@ -34,7 +33,9 @@ class StreamSpider(CrawlSpider):
     """
 
     def parse(self, response):
+        game_id = self.get_game_id(response.url)
         game_item = GameItem(
+            id=game_id,
             name=self.get_name(response),
             description=self.get_description(response),
             all_reviews=self.get_all_reviews(response),
@@ -45,10 +46,30 @@ class StreamSpider(CrawlSpider):
         )
         image_url_list = self.get_image_urls(response)
         items = {
+            "type": "game",
             "game_item": game_item,
             "image_urls": image_url_list,
         }
+        url = self.get_review_url(game_id)
         yield items
+        yield scrapy.Request(
+            url, callback=self.parse_review, dont_filter=True, meta={"id": game_id}
+        )
+
+    def parse_review(self, response):
+        reviews = response.css("div.apphub_CardTextContent::text").extract()
+        reviews_is_recommended = self.get_review_is_recommended_list(response)
+        reviews_posted_date = self.get_review_posted_date_list(response)
+        for index, review in enumerate(reviews):
+            yield {
+                "id": response.meta["id"],
+                "type": "review",
+                "is_recommended": self.get_review_is_recommended(
+                    reviews_is_recommended[index]
+                ),
+                "posted_date": self.clean(reviews_posted_date[index]),
+                "text": self.clean(review),
+            }
 
     """
     This function gets the image urls from the site and then removes the size from the url
@@ -66,16 +87,30 @@ class StreamSpider(CrawlSpider):
         image_urls = response.css(
             "div.highlight_strip_item.highlight_strip_screenshot > img::attr(src)"
         ).extract()
-        # sample url
-        # https://cdn.akamai.steamstatic.com/steam/apps/1031120/ss_5be7930883200d7870ef279cbefe05e8f6ff48f2.1920x1080.jpg?t=1634223750
-        # following code removes the size i.e .1920x1080 in the above example for all images.
         for index, url in enumerate(image_urls):
-            end_index = url.rfind(".")
-            start_index = url[0:end_index].rfind(".")
-            part_two = url[end_index:]
-            part_one = url[0:start_index]
-            image_urls[index] = part_one + part_two
+            image_urls[index] = self.get_image_url_without_size(url)
         return image_urls
+
+    """
+    This function removes the size i.e .1920x1080 in the below example for the url passed:
+    https://cdn.akamai.steamstatic.com/steam/apps/1031120/ss_5be7930883200d7870ef279cbefe05e8f6ff48f2.1920x1080.jpg?t=1634223750
+    
+
+    Args:
+        param1: self
+        param2: url
+
+    Returns:
+       Returns url of image without size.
+
+    """
+
+    def get_image_url_without_size(self, url):
+        after_size_index = url.rfind(".")
+        before_size_index = url[0:after_size_index].rfind(".")
+        after_size_url = url[after_size_index:]
+        before_size_url = url[0:before_size_index]
+        return before_size_url + after_size_url
 
     """
     This function gets the name of the game
@@ -196,8 +231,6 @@ class StreamSpider(CrawlSpider):
         publisher = response.css(
             "#game_highlights > div.rightcol > div > div.glance_ctn_responsive_left > div:nth-child(4) > div.summary.column > a::text"
         ).extract_first()
-        if publisher is None:
-            return ""
         return self.clean(publisher)
 
     """
@@ -213,4 +246,86 @@ class StreamSpider(CrawlSpider):
     """
 
     def clean(self, str):
-        return str.strip()
+        if str is not None:
+            return str.strip()
+        return ""
+
+    """
+    This function gets the game_id from the url for later use
+
+    Args:
+        param1: self
+        param2: str
+
+    Returns:
+       Returns the game_id in form of string
+
+    """
+
+    def get_game_id(self, url):
+        start_index = url.find("app/") + 4  # adding 4 for 4 letters i.e 'app/'
+        end_index = start_index + url[start_index:].find("/")
+        return url[start_index:end_index]
+
+    """
+    This function returns the url for reviews of the game.
+
+    Args:
+        param1: self
+        param2: game_id
+
+    Returns:
+       Returns the url for review of the game with game_id
+
+    """
+
+    def get_review_url(self, game_id):
+        # Wanted to use constants for the url, but couldn't due to .format
+        return "https://steamcommunity.com/app/{}/reviews/".format(game_id)
+
+    """
+    This function the list of recommended or not recommended from the review page
+
+    Args:
+        param1: self
+        param2: response
+
+    Returns:
+       Returns a list of string with 'Recommended' or 'Not Recommended'
+
+    """
+
+    def get_review_is_recommended_list(self, response):
+        return response.css("div.title::text").extract()
+
+    """
+    This function returns true if str is "Recommended" else false
+
+    Args:
+        param1: self
+        param2: is_recommended
+
+    Returns:
+       Returns the url for review of the game with game_id
+
+    """
+
+    def get_review_is_recommended(self, is_recommended):
+        if self.clean(is_recommended) == "Recommended":
+            return True
+        return False
+
+    """
+    This function returns a list of posted date for the reviews
+
+    Args:
+        param1: self
+        param2: response
+
+    Returns:
+       Returns a list with posted dates
+
+    """
+
+    def get_review_posted_date_list(self, response):
+        return response.css("div.date_posted::text").extract()

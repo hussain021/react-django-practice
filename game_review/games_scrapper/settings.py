@@ -23,7 +23,7 @@ IMAGES_STORE = "../images"
 # USER_AGENT = 'games_scrapper (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 FEED_EXPORT_ENCODING = "utf-8-sig"
 
