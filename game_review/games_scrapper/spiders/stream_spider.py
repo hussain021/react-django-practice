@@ -45,15 +45,14 @@ class StreamSpider(CrawlSpider):
             publisher=self.get_publisher(response),
         )
         image_url_list = self.get_image_urls(response)
-        items = {
+        url = self.get_review_url(game_id)
+        yield {
             "type": "game",
             "game_item": game_item,
             "image_urls": image_url_list,
-        }
-        url = self.get_review_url(game_id)
-        yield items
+        }        
         yield scrapy.Request(
-            url, callback=self.parse_review, dont_filter=True, meta={"id": game_id}
+            url=url, callback=self.parse_review, dont_filter=True, meta={"id": game_id}
         )
 
     def parse_review(self, response):
@@ -89,6 +88,7 @@ class StreamSpider(CrawlSpider):
         ).extract()
         for index, url in enumerate(image_urls):
             image_urls[index] = self.get_image_url_without_size(url)
+
         return image_urls
 
     """
@@ -143,6 +143,7 @@ class StreamSpider(CrawlSpider):
         desc = response.css("div.game_description_snippet::text").extract_first()
         if desc is None:
             desc = response.css("div.glance_details > p::text").extract_first()
+
         return self.clean(desc)
 
     """
@@ -165,6 +166,7 @@ class StreamSpider(CrawlSpider):
             all_reviews = response.xpath(
                 '//*[@id="userReviews"]/div/div[2]/text()'
             ).extract_first()
+
         return self.clean(all_reviews)
 
     """
@@ -183,6 +185,7 @@ class StreamSpider(CrawlSpider):
         all_reviews_count = response.css("span.responsive_hidden::text").extract_first()
         if all_reviews_count is None or all_reviews_count is ":":
             return "0"
+
         return self.clean(all_reviews_count)
 
     """
@@ -248,6 +251,7 @@ class StreamSpider(CrawlSpider):
     def clean(self, str):
         if str is not None:
             return str.strip()
+
         return ""
 
     """
@@ -313,6 +317,7 @@ class StreamSpider(CrawlSpider):
     def get_review_is_recommended(self, is_recommended):
         if self.clean(is_recommended) == "Recommended":
             return True
+
         return False
 
     """
