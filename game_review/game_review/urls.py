@@ -20,7 +20,7 @@ from backend.views import RegisterView, MyObtainTokenPairView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("backend.urls")),
-    path("signup/", RegisterView.as_view()),
-    path("login/", MyObtainTokenPairView.as_view()),
+    path("", include("backend.urls"), name="backend"),
+    path("signup/", RegisterView.as_view(),name="register"),
+    path("login/", MyObtainTokenPairView.as_view(), name="login"),
 ]
