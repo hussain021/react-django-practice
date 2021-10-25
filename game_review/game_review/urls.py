@@ -16,7 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from backend.views import RegisterView, MyObtainTokenPairView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("backend.urls")),
+    path("signup/", RegisterView.as_view()),
+    path("login/", MyObtainTokenPairView.as_view()),
 ]
