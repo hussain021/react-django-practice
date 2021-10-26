@@ -50,18 +50,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create(
             username=validated_data["username"],
         )
-
         user.set_password(validated_data["password"])
         user.save()
-
         return user
 
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+class GameTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
-        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
-        # Add custom claims
+        token = super(GameTokenObtainPairSerializer, cls).get_token(user)
         token["username"] = user.username
         return token

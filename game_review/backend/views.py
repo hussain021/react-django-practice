@@ -9,7 +9,7 @@ from backend.serializers import (
     ImageSerializer,
     ReviewSerializer,
     RegisterSerializer,
-    MyTokenObtainPairSerializer,
+    GameTokenObtainPairSerializer,
 )
 
 
@@ -50,4 +50,4 @@ class RegisterView(generics.CreateAPIView):
 
 class MyObtainTokenPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)
-    serializer_class = MyTokenObtainPairSerializer
+    serializer_class = GameTokenObtainPairSerializer
