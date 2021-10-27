@@ -78,6 +78,6 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 
-class MyObtainTokenPairView(TokenObtainPairView):
+class GameObtainTokenPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)
     serializer_class = GameTokenObtainPairSerializer
