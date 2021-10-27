@@ -20,6 +20,7 @@ class Game(models.Model):
     release_date = models.CharField(verbose_name="release_date", max_length=40)
     developer = models.CharField(verbose_name="developer", max_length=40)
     publisher = models.CharField(verbose_name="publisher", max_length=40)
+    poster_image = models.CharField(verbose_name="poster_image_path", max_length=255)
 
 
 class Review(models.Model):

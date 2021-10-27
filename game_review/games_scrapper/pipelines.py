@@ -26,6 +26,7 @@ class GamesScrapperPipeline:
             review_item.save()
         else:
             game_item = item["game_item"]
+            game_item['poster_image'] = (hashlib.sha1(game_item['poster_image'].encode("utf-8")).hexdigest())+ ".jpg"
             game_item.save()
             game_object = Game.objects.get(name=game_item["name"])
             image_items = item["image_urls"]

@@ -34,6 +34,7 @@ class SteamSpider(CrawlSpider):
 
         """
         game_id = self.get_game_id(response.url)
+        poster_image = self.get_poster_image(response),
         game_item = GameItem(
             id=game_id,
             name=self.get_name(response),
@@ -43,8 +44,9 @@ class SteamSpider(CrawlSpider):
             release_date=self.get_release_date(response),
             developer=self.get_developer(response),
             publisher=self.get_publisher(response),
+            poster_image = str(poster_image[0]),
         )
-        image_url_list = self.get_image_urls(response)
+        image_url_list = self.get_image_urls(response)+[str(poster_image[0])]
         url = self.get_review_url(game_id)
         yield {
             "type": "game",
@@ -190,7 +192,7 @@ class SteamSpider(CrawlSpider):
 
         """
         all_reviews_count = response.css("span.responsive_hidden::text").extract_first()
-        if all_reviews_count is None or all_reviews_count is ":":
+        if all_reviews_count is None or all_reviews_count == ":":
             return "0"
 
         return self.clean(all_reviews_count)
@@ -208,6 +210,20 @@ class SteamSpider(CrawlSpider):
 
         """
         return self.clean(response.css("div.date::text").extract_first())
+
+    def get_poster_image(self, response):
+        """
+        This function gets the poster image of the game
+
+        Args:
+            param1: self
+            param2: response
+
+        Returns:
+        Returns the main image of the game.
+
+        """
+        return response.css("div.game_header_image_ctn > img::attr(src)").extract_first()
 
     def get_developer(self, response):
         """
