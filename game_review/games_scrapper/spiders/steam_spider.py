@@ -1,7 +1,7 @@
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 import scrapy
-from games_scrapper.items import GameItem, ReviewItem
+from games_scrapper.items import GameItem
 
 
 class SteamSpider(CrawlSpider):
@@ -39,7 +39,7 @@ class SteamSpider(CrawlSpider):
             id=game_id,
             name=self.get_name(response),
             description=self.get_description(response),
-            all_reviews=self.get_all_reviews(response),
+            all_reviews_ratings=self.get_all_reviews(response),
             all_reviews_count=self.get_all_reviews_count(response),
             release_date=self.get_release_date(response),
             developer=self.get_developer(response),
@@ -63,7 +63,7 @@ class SteamSpider(CrawlSpider):
 
         Args:
             param1: self
-            param2: response
+            param2: response 
 
         Returns:
             yields the review item

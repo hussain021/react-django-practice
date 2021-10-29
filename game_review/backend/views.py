@@ -28,7 +28,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     serializer_class = ImageSerializer
 
     def retrieve(self, request, fk):
-        queryset = Image.objects.filter(game_id=fk)
+        queryset = Game.objects.get(pk=fk).images.all()
         serializer = ImageSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -65,10 +65,10 @@ class RecommendedGamesViewSet(viewsets.ModelViewSet):
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
-    serializer_class = ImageSerializer
+    serializer_class = ReviewSerializer
 
     def retrieve(self, request, fk):
-        queryset = Review.objects.filter(game_id=fk)
+        queryset = Game.objects.get(pk=fk).reviews.all()
         serializer = ReviewSerializer(queryset, many=True)
         return Response(serializer.data)
 
