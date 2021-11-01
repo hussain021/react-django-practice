@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_jwt.views import obtain_jwt_token
 
-from backend.views import RegisterView, GameObtainTokenPairView
+from backend.views import UserList
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("backend.urls"), name="backend"),
-    path("signup/", RegisterView.as_view(),name="register"),
-    path("login/", GameObtainTokenPairView.as_view(), name="login"),
+    path('login/', obtain_jwt_token),
+    path('signup/', UserList.as_view(),name="register")
 ]

@@ -18,12 +18,12 @@ class GamesScrapperPipeline:
     def process_item(self, item, spider):
         if item["type"] == "review":
             id = item["id"]
-            game_object = get_object_or_404(Game, pk=id)
+            game_object = get_object_or_404(Game, game_id=id)
             review_item = ReviewItem(
                 is_recommended=item["is_recommended"],
                 posted_date=item["posted_date"],
                 text=item["text"],
-                game_id=game_object,
+                posted_by=item["posted_by"],
             )
             review_item.save()
             review_item = get_object_or_404(Review, text=item["text"])
@@ -35,19 +35,29 @@ class GamesScrapperPipeline:
                 game_item["description"] != "This content requires the base game"
                 and game_item["description"] != "This is additional content for"
             ):
-                game_item['all_reviews_ratings'] = self.get_rating(game_item['all_reviews_ratings'])
-                game_item['all_reviews_count'] = self.get_reviews_count(game_item['all_reviews_count'])
-                game_item["poster_image"] = (
+                game_item["all_reviews_ratings"] = self.get_rating(
+                    game_item["all_reviews_ratings"]
+                )
+                game_item["all_reviews_count"] = self.get_reviews_count(
+                    game_item["all_reviews_count"]
+                )
+                poster_image_path = (
                     hashlib.sha1(game_item["poster_image"].encode("utf-8")).hexdigest()
                 ) + ".jpg"
+                print("here")
+                poster_image = ImageItem(image_path=poster_image_path)
+                poster_image.save()
+                poster_image = get_object_or_404(Image, image_path=poster_image_path)
+                game_item["poster_image"] = poster_image
                 game_item.save()
                 game_object = Game.objects.get(name=game_item["name"])
                 image_items = item["image_urls"]
                 for image in image_items:
-                    image_path=(hashlib.sha1(image.encode("utf-8")).hexdigest())+ ".jpg"
+                    image_path = (
+                        hashlib.sha1(image.encode("utf-8")).hexdigest()
+                    ) + ".jpg"
                     image_item = ImageItem(
                         image_path=image_path,
-                        game_id=game_object
                     )
                     image_item.save()
                     image_item = get_object_or_404(Image, image_path=image_path)
@@ -57,7 +67,7 @@ class GamesScrapperPipeline:
                 raise DropItem(f"{item} is not a Game")
 
     def get_rating(self, review):
-        if review =="Overwhelmingly Positive":
+        if review == "Overwhelmingly Positive":
             return "7"
         elif review == "Very Positive":
             return "6"
@@ -75,8 +85,7 @@ class GamesScrapperPipeline:
             return "0"
 
     def get_reviews_count(self, count):
-        replacements = {'(': '', ')': ''}
-        for x,y in replacements.items():
+        replacements = {"(": "", ")": ""}
+        for x, y in replacements.items():
             count = count.replace(x, y)
         return count
-

@@ -34,9 +34,9 @@ class SteamSpider(CrawlSpider):
 
         """
         game_id = self.get_game_id(response.url)
-        poster_image = self.get_poster_image(response),
+        poster_image = (self.get_poster_image(response),)
         game_item = GameItem(
-            id=game_id,
+            game_id=game_id,
             name=self.get_name(response),
             description=self.get_description(response),
             all_reviews_ratings=self.get_all_reviews(response),
@@ -44,15 +44,15 @@ class SteamSpider(CrawlSpider):
             release_date=self.get_release_date(response),
             developer=self.get_developer(response),
             publisher=self.get_publisher(response),
-            poster_image = str(poster_image[0]),
+            poster_image=str(poster_image[0]),
         )
-        image_url_list = self.get_image_urls(response)+[str(poster_image[0])]
+        image_url_list = self.get_image_urls(response) + [str(poster_image[0])]
         url = self.get_review_url(game_id)
         yield {
             "type": "game",
             "game_item": game_item,
             "image_urls": image_url_list,
-        }        
+        }
         yield scrapy.Request(
             url=url, callback=self.parse_review, dont_filter=True, meta={"id": game_id}
         )
@@ -63,7 +63,7 @@ class SteamSpider(CrawlSpider):
 
         Args:
             param1: self
-            param2: response 
+            param2: response
 
         Returns:
             yields the review item
@@ -72,6 +72,7 @@ class SteamSpider(CrawlSpider):
         reviews = self.get_review_text_list(response)
         reviews_is_recommended = self.get_review_is_recommended_list(response)
         reviews_posted_date = self.get_review_posted_date_list(response)
+        review_posted_by = self.get_review_posted_by_list(response)
         for index, review in enumerate(reviews):
             yield {
                 "id": response.meta["id"],
@@ -80,6 +81,7 @@ class SteamSpider(CrawlSpider):
                     reviews_is_recommended[index]
                 ),
                 "posted_date": self.clean(reviews_posted_date[index]),
+                "posted_by": self.clean(review_posted_by[index]),
                 "text": self.clean(review),
             }
 
@@ -107,7 +109,7 @@ class SteamSpider(CrawlSpider):
         """
         This function removes the size i.e .1920x1080 in the below example for the url passed:
         https://cdn.akamai.steamstatic.com/steam/apps/1031120/ss_5be7930883200d7870ef279cbefe05e8f6ff48f2.1920x1080.jpg?t=1634223750
-        
+
 
         Args:
             param1: self
@@ -122,8 +124,6 @@ class SteamSpider(CrawlSpider):
         after_size_url = url[after_size_index:]
         before_size_url = url[0:before_size_index]
         return before_size_url + after_size_url
-
-    
 
     def get_name(self, response):
         """
@@ -223,7 +223,9 @@ class SteamSpider(CrawlSpider):
         Returns the main image of the game.
 
         """
-        return response.css("div.game_header_image_ctn > img::attr(src)").extract_first()
+        return response.css(
+            "div.game_header_image_ctn > img::attr(src)"
+        ).extract_first()
 
     def get_developer(self, response):
         """
@@ -363,4 +365,16 @@ class SteamSpider(CrawlSpider):
         """
         return response.css("div.apphub_CardTextContent::text").extract()
 
+    def get_review_posted_by_list(self, response):
+        """
+        This function returns a list of author names for the reviews
 
+        Args:
+            param1: self
+            param2: response
+
+        Returns:
+        Returns a list with author names
+
+        """
+        return response.css("div.apphub_CardContentAuthorName > a::text").extract()

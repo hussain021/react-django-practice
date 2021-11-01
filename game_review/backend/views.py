@@ -1,39 +1,30 @@
-from rest_framework import generics, viewsets
+from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework import permissions, status
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 
-from backend.models import Game, Image, Review, User
+from backend.models import Game
 from backend.serializers import (
     GameSerializer,
-    ImageSerializer,
-    ReviewSerializer,
-    RegisterSerializer,
-    GameTokenObtainPairSerializer,
+    GameShorterSerializer,
+    UserSerializerWithToken,
 )
 
-
-class GameListCreate(generics.ListCreateAPIView):
-    queryset = Game.objects.all()
-    serializer_class = GameSerializer
-
-
-class GameDetail(generics.RetrieveAPIView):
-    queryset = Game.objects.all()
-    serializer_class = GameSerializer
-
-
-class ImageViewSet(viewsets.ModelViewSet):
-    queryset = Image.objects.all()
-    serializer_class = ImageSerializer
-
-    def retrieve(self, request, fk):
-        queryset = Game.objects.get(pk=fk).images.all()
-        serializer = ImageSerializer(queryset, many=True)
+class GameViewSet(viewsets.ModelViewSet):
+    def list(self, request, *args, **kwargs):
+        recommendedQueryset = Game.objects.all().order_by("-all_reviews_ratings")[:3]
+        popularQueryset = Game.objects.all().order_by("all_reviews_count")[:20]
+        serializer = GameSerializer(recommendedQueryset.union(popularQueryset), many=True)
         return Response(serializer.data)
+        
+    def retrieve(self, request, pk):
+        queryset = Game.objects.get(basemodel_ptr_id=pk)
+        Serializer = GameShorterSerializer(queryset)
+        return Response(Serializer.data)
 
 
-class GamesViewSet(viewsets.ModelViewSet):
+class SearchViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
 
@@ -42,42 +33,12 @@ class GamesViewSet(viewsets.ModelViewSet):
         serializer = GameSerializer(queryset, many=True)
         return Response(serializer.data)
 
+class UserList(APIView):
+    permission_classes = (permissions.AllowAny,)
 
-class PopularGamesViewSet(viewsets.ModelViewSet):
-    queryset = Game.objects.all()
-    serializer_class = GameSerializer
-
-    def retrieve(self, request):
-        queryset = Game.objects.all().order_by("all_reviews_count")[:20]
-        serializer = GameSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-
-class RecommendedGamesViewSet(viewsets.ModelViewSet):
-    queryset = Game.objects.all()
-    serializer_class = GameSerializer
-
-    def retrieve(self, request):
-        queryset = Game.objects.all().order_by("-all_reviews")[:10]
-        serializer = GameSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-
-class ReviewViewSet(viewsets.ModelViewSet):
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
-
-    def retrieve(self, request, fk):
-        queryset = Game.objects.get(pk=fk).reviews.all()
-        serializer = ReviewSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-
-class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer
-
-
-class GameObtainTokenPairView(TokenObtainPairView):
-    permission_classes = (AllowAny,)
-    serializer_class = GameTokenObtainPairSerializer
+    def post(self, request, format=None):
+        serializer = UserSerializerWithToken(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
