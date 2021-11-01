@@ -15,12 +15,12 @@ class GameViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         recommendedQueryset = Game.objects.all().order_by("-all_reviews_ratings")[:3]
         popularQueryset = Game.objects.all().order_by("all_reviews_count")[:20]
-        serializer = GameSerializer(recommendedQueryset.union(popularQueryset), many=True)
+        serializer = GameShorterSerializer(recommendedQueryset.union(popularQueryset), many=True)
         return Response(serializer.data)
         
     def retrieve(self, request, pk):
         queryset = Game.objects.get(basemodel_ptr_id=pk)
-        Serializer = GameShorterSerializer(queryset)
+        Serializer = GameSerializer(queryset)
         return Response(Serializer.data)
 
 
