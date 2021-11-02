@@ -6,34 +6,34 @@ from rest_framework.decorators import api_view
 
 from backend.models import Game
 from backend.serializers import (
-    GameSerializer,
-    GameShorterSerializer,
+    DetailedGameSerializer,
+    SimpleGameSerializer,
     UserSerializerWithToken,
 )
 
 
 class GameViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
-        recommendedQueryset = Game.objects.all().order_by("-all_reviews_ratings")[:3]
-        popularQueryset = Game.objects.all().order_by("all_reviews_count")[:20]
-        serializer = GameShorterSerializer(
-            recommendedQueryset.union(popularQueryset), many=True
+        recommended_queryset = Game.objects.all().order_by("-all_reviews_ratings")[:3]
+        popular_queryset = Game.objects.all().order_by("all_reviews_count")[:20]
+        serializer = SimpleGameSerializer(
+            recommended_queryset.union(popular_queryset), many=True
         )
         return Response(serializer.data)
 
     def retrieve(self, request, pk):
         queryset = Game.objects.get(basemodel_ptr_id=pk)
-        Serializer = GameSerializer(queryset)
-        return Response(Serializer.data)
+        serializer = DetailedGameSerializer(queryset)
+        return Response(serializer.data)
 
 
 class SearchViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
-    serializer_class = GameSerializer
+    serializer_class = DetailedGameSerializer
 
     def retrieve(self, request, partial_name):
         queryset = Game.objects.filter(name__contains=partial_name).order_by("id")[:3]
-        serializer = GameSerializer(queryset, many=True)
+        serializer = DetailedGameSerializer(queryset, many=True)
         return Response(serializer.data)
 
 

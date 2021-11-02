@@ -12,7 +12,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = serializers.ALL_FIELDS
 
 
-class GameSerializer(serializers.ModelSerializer):
+class DetailedGameSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True)
 
     class Meta:
@@ -20,7 +20,7 @@ class GameSerializer(serializers.ModelSerializer):
         fields = serializers.ALL_FIELDS
 
 
-class GameShorterSerializer(serializers.ModelSerializer):
+class SimpleGameSerializer(serializers.ModelSerializer):
     # This is a shorter serialzer for games, we call this on the home page.
     class Meta:
         model = Game
@@ -47,7 +47,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserSerializerWithToken(serializers.ModelSerializer):
-
+    """ 
+        JWT referenced from here
+        https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
+    """
     token = serializers.SerializerMethodField()
     password = serializers.CharField(write_only=True)
 
@@ -70,7 +73,3 @@ class UserSerializerWithToken(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("token", "username", "password")
-
-
-# JWT referenced from here
-# https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
