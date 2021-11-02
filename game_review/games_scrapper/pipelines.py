@@ -44,7 +44,6 @@ class GamesScrapperPipeline:
                 poster_image_path = (
                     hashlib.sha1(game_item["poster_image"].encode("utf-8")).hexdigest()
                 ) + ".jpg"
-                print("here")
                 poster_image = ImageItem(image_path=poster_image_path)
                 poster_image.save()
                 poster_image = get_object_or_404(Image, image_path=poster_image_path)
@@ -84,8 +83,8 @@ class GamesScrapperPipeline:
         else:
             return "0"
 
-    def get_reviews_count(self, count):
+    def get_reviews_count(self, review_count):
         replacements = {"(": "", ")": ""}
-        for x, y in replacements.items():
-            count = count.replace(x, y)
-        return count
+        for replace, replace_with in replacements.items():
+            review_count = review_count.replace(replace, replace_with)
+        return review_count
