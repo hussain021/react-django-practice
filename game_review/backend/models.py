@@ -36,4 +36,4 @@ class Review(BaseModel):
     is_recommended = models.BooleanField(default=True)
     posted_date = models.CharField(max_length=40)
     posted_by = models.CharField(max_length=40)
-    text = models.TextField(verbose_name="review_text")
+    text = models.TextField(verbose_name="review_text", unique=True)

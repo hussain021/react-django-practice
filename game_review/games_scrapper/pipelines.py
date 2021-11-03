@@ -49,18 +49,6 @@ class GamesScrapperPipeline:
                 poster_image = get_object_or_404(Image, image_path=poster_image_path)
                 game_item["poster_image"] = poster_image
                 game_item.save()
-                game_object = Game.objects.get(name=game_item["name"])
-                image_items = item["image_urls"]
-                for image in image_items:
-                    image_path = (
-                        hashlib.sha1(image.encode("utf-8")).hexdigest()
-                    ) + ".jpg"
-                    image_item = ImageItem(
-                        image_path=image_path,
-                    )
-                    image_item.save()
-                    image_item = get_object_or_404(Image, image_path=image_path)
-                    game_object.images.add(image_item)
                 return item
             else:
                 raise DropItem(f"{item} is not a Game")

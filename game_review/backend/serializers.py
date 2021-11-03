@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_jwt.settings import api_settings
 
 from backend.models import Game, Image, Review, User

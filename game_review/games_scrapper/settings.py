@@ -17,7 +17,6 @@ ITEM_PIPELINES = {
     "games_scrapper.pipelines.GamesScrapperPipeline": 300,
 }
 
-IMAGES_STORE = "../images"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'games_scrapper (+http://www.yourdomain.com)'
@@ -94,3 +93,6 @@ AUTOTHROTTLE_MAX_DELAY = 10
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+AWS_ACCESS_KEY_ID = "AKIA52C7VNDF364RJMZG"
+AWS_SECRET_ACCESS_KEY = "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"
+IMAGES_STORE = "s3://game-review/"
