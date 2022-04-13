@@ -28,8 +28,7 @@ SECRET_KEY = "django-insecure-_y92^_4b4xin&peh9dh=kev)rwvu@26*=+r9l3bltjox@(9_4!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['game-review-hussain.herokuapp.com','localhost:3000','127.0.0.1']
-
+ALLOWED_HOSTS = ['game-review-hussain1.herokuapp.com','localhost:3000','127.0.0.1']
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
@@ -157,7 +156,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
+PROJECT_ROOT   =   Path(__file__).resolve().parent.parent
 STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
@@ -166,8 +165,9 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
 
+
 #  Add configuration for static files storage using whitenoise
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)

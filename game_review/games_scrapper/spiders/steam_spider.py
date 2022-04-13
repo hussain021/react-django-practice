@@ -52,7 +52,6 @@ class SteamSpider(CrawlSpider):
             "type": "game",
             "game_item": game_item,
             "image_urls":[str(poster_image[0])]
-            #"image_urls": image_url_list,
         }
         yield scrapy.Request(
             url=url, callback=self.parse_review, dont_filter=True, meta={"id": game_id}
